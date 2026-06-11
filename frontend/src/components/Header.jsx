@@ -21,13 +21,63 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
             name: 'Products',
             href: '/#products',
             dropdown: [
-                { name: 'Continuous Ambient Air Quality Monitoring Stations', href: '/product/698da53e5bff466e7fbecc3b' },
-                { name: 'Continuous Emission Monitoring Systems', href: '/product/698da53e5bff466e7fbecc39' },
-                { name: 'Effluent Quality Monitoring Systems', href: '/product/698da53e5bff466e7fbecc40' },
-                { name: 'IIoT-based Data Loggers & Remote Calibration Units', href: '/product/698da53e5bff466e7fbecc38' },
-                { name: 'Weather Monitoring Systems (WMS)', href: '/product/698da53e5bff466e7fbecc41' },
-                { name: 'Smart City Environmental Monitoring', href: '/product/698da53e5bff466e7fbecc42' },
-                { name: 'Advanced Instrumentation', href: '/product/698da53e5bff466e7fbecc43' }
+                { 
+                    name: 'Continuous Ambient Air Quality Monitoring Stations', 
+                    href: '/product/698da53e5bff466e7fbecc3b',
+                    subItems: [
+                        { name: 'AQMS-900 Ambient Air Quality System', href: '#' },
+                        { name: 'AQMS-900S Small Ambient Air System', href: '#' },
+                        { name: 'AQMS-900C Particulate Matter Monitor', href: '#' }
+                    ]
+                },
+                { 
+                    name: 'Continuous Emission Monitoring Systems', 
+                    href: '/product/698da53e5bff466e7fbecc39',
+                    subItems: [
+                        { name: 'CEMS-2000 Emission Monitoring System', href: '#' },
+                        { name: 'CEMS-2000B Flue Gas Analyzer', href: '#' }
+                    ]
+                },
+                { 
+                    name: 'Effluent Quality Monitoring Systems', 
+                    href: '/product/698da53e5bff466e7fbecc40',
+                    subItems: [
+                        { name: 'EQMS-1000 Water Quality Analyzer', href: '#' },
+                        { name: 'EQMS-1000 Heavy Metal Monitor', href: '#' }
+                    ]
+                },
+                { 
+                    name: 'IIoT-based Data Loggers & Remote Calibration Units', 
+                    href: '/product/698da53e5bff466e7fbecc38',
+                    subItems: [
+                        { name: 'Smart IIoT Data Logger V1', href: '#' },
+                        { name: 'Remote Calibration Unit RCU-1', href: '#' }
+                    ]
+                },
+                { 
+                    name: 'Weather Monitoring Systems (WMS)', 
+                    href: '/product/698da53e5bff466e7fbecc41',
+                    subItems: [
+                        { name: 'WMS-500 Compact Weather Station', href: '#' },
+                        { name: 'WMS-1000 Professional Weather Station', href: '#' }
+                    ]
+                },
+                { 
+                    name: 'Smart City Environmental Monitoring', 
+                    href: '/product/698da53e5bff466e7fbecc42',
+                    subItems: [
+                        { name: 'Smart Pole Environment Node', href: '#' },
+                        { name: 'Urban Noise & Dust Monitor', href: '#' }
+                    ]
+                },
+                { 
+                    name: 'Advanced Instrumentation', 
+                    href: '/product/698da53e5bff466e7fbecc43',
+                    subItems: [
+                        { name: 'High-Precision Gas Analyzer', href: '#' },
+                        { name: 'Laser Particulate Counter', href: '#' }
+                    ]
+                }
             ]
         },
         { name: 'Services', href: '/#services' },
@@ -79,42 +129,39 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
 
                                 {/* Dropdown Menu */}
                                 {link.dropdown && (
-                                    <div className="absolute top-full left-0 pt-4 hidden group-hover:block min-w-[260px]">
-                                        <div className={`p-4 rounded-xl shadow-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'}`}>
+                                    <div className="absolute top-full left-0 pt-4 hidden group-hover:block w-[340px]">
+                                        <div className={`py-3 rounded-xl shadow-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'}`}>
                                             {link.dropdown.map((dropItem) => (
-                                                <div key={dropItem.name} className="mb-2 last:mb-0">
+                                                <div key={dropItem.name} className="relative group/item">
                                                     {dropItem.subItems ? (
-                                                        <div className="relative">
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.preventDefault();
-                                                                    setActiveSubMenu(activeSubMenu === dropItem.name ? null : dropItem.name);
-                                                                }}
-                                                                className={`w-full text-left text-sm font-bold py-2 px-3 rounded-lg flex justify-between items-center transition-colors ${isDarkMode ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-700 hover:bg-slate-50'}`}
+                                                        <>
+                                                            <a
+                                                                href={dropItem.href}
+                                                                className={`w-full text-left text-sm font-semibold py-3 px-5 flex justify-between items-center transition-colors ${isDarkMode ? 'text-slate-300 hover:bg-slate-800 hover:text-emerald-400' : 'text-slate-700 hover:bg-slate-50 hover:text-emerald-600'}`}
                                                             >
-                                                                {dropItem.name}
-                                                                <ChevronDown size={14} className={`transition-transform duration-300 ${activeSubMenu === dropItem.name ? 'rotate-180' : ''}`} />
-                                                            </button>
+                                                                <span className="flex-1 pr-4">{dropItem.name}</span>
+                                                                <ChevronDown size={16} className="-rotate-90 opacity-50 flex-shrink-0" />
+                                                            </a>
 
-                                                            {/* Nested Sub-menu */}
-                                                            {activeSubMenu === dropItem.name && (
-                                                                <div className={`mt-1 ml-4 pl-4 border-l-2 border-emerald-500/20 space-y-1`}>
+                                                            {/* Flyout Nested Sub-menu */}
+                                                            <div className="absolute top-0 left-full pl-2 hidden group-hover/item:block w-[340px]">
+                                                                <div className={`py-3 rounded-xl shadow-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'}`}>
                                                                     {dropItem.subItems.map((sub) => (
                                                                         <a
                                                                             key={sub.name}
                                                                             href={sub.href}
-                                                                            className={`block text-xs font-semibold py-2 px-2 rounded-lg transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'}`}
+                                                                            className={`block text-sm font-medium py-3 px-5 transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-400 hover:bg-slate-800' : 'text-slate-600 hover:text-emerald-600 hover:bg-slate-50'}`}
                                                                         >
                                                                             {sub.name}
                                                                         </a>
                                                                     ))}
                                                                 </div>
-                                                            )}
-                                                        </div>
+                                                            </div>
+                                                        </>
                                                     ) : (
                                                         <a
                                                             href={dropItem.href}
-                                                            className={`block text-sm font-bold py-2 px-3 rounded-lg transition-colors ${isDarkMode ? 'text-slate-300 hover:bg-slate-800 hover:text-emerald-500' : 'text-slate-700 hover:bg-slate-50 hover:text-emerald-600'}`}
+                                                            className={`block text-sm font-semibold py-3 px-5 transition-colors ${isDarkMode ? 'text-slate-300 hover:bg-slate-800 hover:text-emerald-400' : 'text-slate-700 hover:bg-slate-50 hover:text-emerald-600'}`}
                                                         >
                                                             {dropItem.name}
                                                         </a>
@@ -175,10 +222,10 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                                 <div key={subLink.name}>
                                                     {subLink.subItems ? (
                                                         <div className="flex flex-col gap-3">
-                                                            <span className={`text-lg font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                                                            <a href={subLink.href} onClick={() => setMobileMenuOpen(false)} className={`text-lg font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                                                                 {subLink.name}
-                                                            </span>
-                                                            <div className="pl-4 flex flex-col gap-3">
+                                                            </a>
+                                                            <div className="pl-4 border-l-2 border-emerald-500/20 flex flex-col gap-3">
                                                                 {subLink.subItems.map(nested => (
                                                                     <a
                                                                         key={nested.name}
