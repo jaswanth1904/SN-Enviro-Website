@@ -21,8 +21,8 @@ const AdminAuth = ({ isDarkMode }) => {
         setError('');
 
         const endpoint = isLogin ? '/api/admin/login' : '/api/admin/signup';
-        const body = isLogin 
-            ? { email, password } 
+        const body = isLogin
+            ? { email, password }
             : { name, email, password, adminSecret };
 
         try {
@@ -54,36 +54,33 @@ const AdminAuth = ({ isDarkMode }) => {
     };
 
     return (
-        <div className={`min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-500 ${
-            isDarkMode 
-                ? 'bg-slate-950 text-slate-100' 
+        <div className={`min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-500 ${isDarkMode
+                ? 'bg-slate-950 text-slate-100'
                 : 'bg-slate-50 text-slate-800'
-        }`}>
+            }`}>
             {/* Animated Background Orbs */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                <motion.div 
-                    animate={{ 
+                <motion.div
+                    animate={{
                         scale: [1, 1.2, 1],
                         rotate: [0, 90, 0],
                         x: [0, 50, 0],
                         y: [0, -30, 0]
                     }}
                     transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                    className={`absolute -top-40 -left-40 w-96 h-96 rounded-full blur-[100px] transition-colors duration-500 ${
-                        isDarkMode ? 'bg-emerald-500/20' : 'bg-emerald-500/10'
-                    }`}
+                    className={`absolute -top-40 -left-40 w-96 h-96 rounded-full blur-[100px] transition-colors duration-500 ${isDarkMode ? 'bg-emerald-500/20' : 'bg-emerald-500/10'
+                        }`}
                 />
-                <motion.div 
-                    animate={{ 
+                <motion.div
+                    animate={{
                         scale: [1.2, 1, 1.2],
                         rotate: [0, -90, 0],
                         x: [0, -50, 0],
                         y: [0, 30, 0]
                     }}
                     transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-                    className={`absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-[100px] transition-colors duration-500 ${
-                        isDarkMode ? 'bg-teal-500/20' : 'bg-teal-500/10'
-                    }`}
+                    className={`absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-[100px] transition-colors duration-500 ${isDarkMode ? 'bg-teal-500/20' : 'bg-teal-500/10'
+                        }`}
                 />
             </div>
 
@@ -96,74 +93,68 @@ const AdminAuth = ({ isDarkMode }) => {
             >
                 {/* Back Link to Public Site */}
                 <div className="mb-6 text-center">
-                    <button 
-                        onClick={() => navigate('/')} 
-                        className={`text-xs font-bold uppercase tracking-widest transition-colors ${
-                            isDarkMode ? 'text-slate-400 hover:text-emerald-400' : 'text-slate-500 hover:text-emerald-600'
-                        }`}
+                    <button
+                        onClick={() => navigate('/')}
+                        className={`text-xs font-bold uppercase tracking-widest transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-400' : 'text-slate-500 hover:text-emerald-600'
+                            }`}
                     >
                         ← Back to SN Enviro Website
                     </button>
                 </div>
 
-                <div className={`relative overflow-hidden rounded-3xl border backdrop-blur-xl shadow-2xl transition-all duration-500 ${
-                    isDarkMode 
-                        ? 'bg-slate-900/60 border-slate-800 shadow-slate-950/50' 
+                <div className={`relative overflow-hidden rounded-3xl border backdrop-blur-xl shadow-2xl transition-all duration-500 ${isDarkMode
+                        ? 'bg-slate-900/60 border-slate-800 shadow-slate-950/50'
                         : 'bg-white/80 border-slate-200 shadow-slate-200/50'
-                }`}>
-                    
+                    }`}>
+
                     {/* Header Splash Bar */}
                     <div className="h-32 bg-gradient-to-r from-emerald-500 to-emerald-600 flex flex-col items-center justify-center relative p-6">
                         <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/20 shadow-inner">
                             <ShieldCheck className="text-white w-8 h-8" />
                         </div>
-                        <div className={`absolute -bottom-1 w-full h-4 rounded-t-[100%] transition-colors duration-500 ${
-                            isDarkMode ? 'bg-slate-900/90' : 'bg-white'
-                        }`} />
+                        <div className={`absolute -bottom-1 w-full h-4 rounded-t-[100%] transition-colors duration-500 ${isDarkMode ? 'bg-slate-900/90' : 'bg-white'
+                            }`} />
                     </div>
 
                     {/* Content Body */}
                     <div className="p-8 md:p-10 pt-4">
-                        
+
                         {/* Title and Subtitle */}
                         <div className="text-center mb-8">
                             <h2 className={`text-3xl font-extrabold tracking-tight mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                                 {isLogin ? 'Admin Portal Sign In' : 'Create Administrator'}
                             </h2>
                             <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                                {isLogin 
-                                    ? 'Authorize access to manage products, settings, and partners.' 
+                                {isLogin
+                                    ? 'Authorize access to manage products, settings, and partners.'
                                     : 'Register a secure administrator profile for SN Enviro.'}
                             </p>
                         </div>
 
                         {/* Slide-in Switch Tabs */}
-                        <div className={`flex p-1 border rounded-2xl mb-8 relative transition-colors duration-500 ${
-                            isDarkMode ? 'bg-slate-950/40 border-slate-800' : 'bg-slate-100 border-slate-200'
-                        }`}>
+                        <div className={`flex p-1 border rounded-2xl mb-8 relative transition-colors duration-500 ${isDarkMode ? 'bg-slate-950/40 border-slate-800' : 'bg-slate-100 border-slate-200'
+                            }`}>
                             <button
                                 onClick={() => { setIsLogin(true); setError(''); }}
-                                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 relative z-10 ${
-                                    isLogin 
-                                        ? 'text-white font-bold' 
+                                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 relative z-10 ${isLogin
+                                        ? 'text-white font-bold'
                                         : `${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-800'}`
-                                }`}
+                                    }`}
                             >
                                 Sign In
                             </button>
                             <button
                                 onClick={() => { setIsLogin(false); setError(''); }}
-                                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 relative z-10 ${
-                                    !isLogin 
-                                        ? 'text-white font-bold' 
+                                className={`flex-1 py-3 text-sm font-semibold rounded-xl transition-all duration-300 relative z-10 ${!isLogin
+                                        ? 'text-white font-bold'
                                         : `${isDarkMode ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-800'}`
-                                }`}
+                                    }`}
                             >
                                 Create Account
                             </button>
-                            
+
                             {/* Animated Background Selector */}
-                            <motion.div 
+                            <motion.div
                                 className="absolute top-1 bottom-1 left-1 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl shadow-lg shadow-emerald-500/20"
                                 layoutId="activeTab"
                                 transition={{ type: "spring", stiffness: 380, damping: 30 }}
@@ -177,7 +168,7 @@ const AdminAuth = ({ isDarkMode }) => {
                         {/* Error Notification Alert */}
                         <AnimatePresence mode="wait">
                             {error && (
-                                <motion.div 
+                                <motion.div
                                     initial={{ opacity: 0, height: 0, y: -10 }}
                                     animate={{ opacity: 1, height: 'auto', y: 0 }}
                                     exit={{ opacity: 0, height: 0, y: -10 }}
@@ -191,7 +182,7 @@ const AdminAuth = ({ isDarkMode }) => {
 
                         {/* Input Form */}
                         <form onSubmit={handleSubmit} className="space-y-5">
-                            
+
                             {/* Sign Up Name Field */}
                             <AnimatePresence>
                                 {!isLogin && (
@@ -313,9 +304,8 @@ const AdminAuth = ({ isDarkMode }) => {
                     </div>
 
                     {/* Bottom Signature Section */}
-                    <div className={`p-4 border-t text-center transition-colors duration-500 ${
-                        isDarkMode ? 'border-slate-800 bg-slate-950/20' : 'border-slate-100 bg-slate-50/50'
-                    }`}>
+                    <div className={`p-4 border-t text-center transition-colors duration-500 ${isDarkMode ? 'border-slate-800 bg-slate-950/20' : 'border-slate-100 bg-slate-50/50'
+                        }`}>
                         <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
                             © 2026 SN Enviro Solutions • Secure Admin Gateway
                         </p>

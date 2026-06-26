@@ -432,11 +432,10 @@ const ProductDetails = ({ isDarkMode }) => {
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold transition-all duration-300 ${
-                                        activeTab === tab.id 
-                                            ? 'bg-emerald-500 text-white shadow-xl shadow-emerald-500/30 -translate-y-1' 
+                                    className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold transition-all duration-300 ${activeTab === tab.id
+                                            ? 'bg-emerald-500 text-white shadow-xl shadow-emerald-500/30 -translate-y-1'
                                             : `${isDarkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-white text-slate-600 hover:bg-slate-100'} hover:shadow-md border border-slate-200 dark:border-slate-700`
-                                    }`}
+                                        }`}
                                 >
                                     <tab.icon size={20} />
                                     {tab.label}
@@ -616,8 +615,8 @@ const ProductDetails = ({ isDarkMode }) => {
                                                 </h3>
                                                 <div className="space-y-4">
                                                     {product.faqs.map((faq, idx) => (
-                                                        <div 
-                                                            key={idx} 
+                                                        <div
+                                                            key={idx}
                                                             className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'border-slate-700 bg-slate-800/30' : 'border-slate-200 bg-white'}`}
                                                         >
                                                             <button
