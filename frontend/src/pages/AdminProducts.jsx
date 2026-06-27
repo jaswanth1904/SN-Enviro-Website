@@ -35,7 +35,7 @@ const AdminProducts = ({ isDarkMode }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('adminToken');
-        
+
         const formData = new FormData();
         formData.append('title', title);
         formData.append('desc', desc);
@@ -104,7 +104,7 @@ const AdminProducts = ({ isDarkMode }) => {
                     <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Add, edit, or remove website products</p>
                 </div>
                 {!showForm && (
-                    <button 
+                    <button
                         onClick={() => setShowForm(true)}
                         className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl flex items-center gap-2 transition-colors shadow-sm cursor-pointer"
                     >
@@ -126,7 +126,7 @@ const AdminProducts = ({ isDarkMode }) => {
                             <X size={24} />
                         </button>
                     </div>
-                    
+
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
@@ -143,12 +143,12 @@ const AdminProducts = ({ isDarkMode }) => {
                             <label className="block mb-1 text-sm font-medium">Short Description (for cards)</label>
                             <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows="2" className={`w-full p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-slate-50 border-slate-200'} outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20`} required />
                         </div>
-                        
+
                         <div>
                             <label className="block mb-1 text-sm font-medium">Detailed Description (for product page)</label>
                             <textarea value={details} onChange={(e) => setDetails(e.target.value)} rows="4" className={`w-full p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-slate-50 border-slate-200'} outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20`} />
                         </div>
-                        
+
                         <div>
                             <label className="block mb-1 text-sm font-medium">Product Image</label>
                             <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} className={`w-full p-2 text-sm rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-700' : 'bg-slate-50 border-slate-200'}`} />
@@ -156,7 +156,7 @@ const AdminProducts = ({ isDarkMode }) => {
                                 <p className="text-xs mt-2 text-emerald-500">Current image exists. Upload new to replace.</p>
                             )}
                         </div>
-                        
+
                         <div className="flex gap-3 pt-4">
                             <button type="submit" className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-medium transition-colors cursor-pointer">
                                 {editingProduct ? 'Save Changes' : 'Create Product'}
@@ -196,9 +196,9 @@ const AdminProducts = ({ isDarkMode }) => {
                                     <tr key={product._id} className={`hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors`}>
                                         <td className="p-4">
                                             <div className="w-12 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-white flex items-center justify-center overflow-hidden">
-                                                <img 
-                                                    src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `http://localhost:5000/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")} 
-                                                    alt={product.title} 
+                                                <img
+                                                    src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `http://localhost:5000/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
+                                                    alt={product.title}
                                                     className="max-w-full max-h-full object-contain"
                                                     onError={(e) => { e.target.src = '/assets/logo.png'; }}
                                                 />
