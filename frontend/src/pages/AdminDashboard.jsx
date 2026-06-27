@@ -14,7 +14,7 @@ const AdminDashboard = ({ isDarkMode }) => {
 
     useEffect(() => {
         // Fetch visits stats & initial activity feed from backend
-        axios.get('http://localhost:5000/api/visits/stats')
+        axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/visits/stats')
             .then(res => {
                 setStats(prev => ({
                     ...prev,

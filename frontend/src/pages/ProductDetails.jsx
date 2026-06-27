@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, CheckCircle, XCircle, Activity, Info, FileText, Settings, Layers, Zap, Wrench, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -203,6 +203,7 @@ const ProductDetails = ({ isDarkMode }) => {
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('overview');
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
+    const [activeSubTab, setActiveSubTab] = useState('system');
 
     const tabs = [
         { id: 'overview', label: 'Overview', icon: FileText },
@@ -587,7 +588,7 @@ const ProductDetails = ({ isDarkMode }) => {
                         className={`rounded-3xl p-8 flex items-center justify-center ${isDarkMode ? 'bg-slate-800' : 'bg-white shadow-xl'}`}
                     >
                         <img
-                            src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `http://localhost:5000/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
+                            src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
                             alt={product.title}
                             className="max-w-full max-h-[500px] object-contain"
                             onError={(e) => {

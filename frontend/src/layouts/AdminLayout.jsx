@@ -45,7 +45,7 @@ const AdminLayout = ({ children, isDarkMode }) => {
 
     // SSE connection listener
     useEffect(() => {
-        const eventSource = new EventSource('http://localhost:5000/api/notifications/stream');
+        const eventSource = new EventSource((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/notifications/stream');
 
         eventSource.onmessage = (event) => {
             try {

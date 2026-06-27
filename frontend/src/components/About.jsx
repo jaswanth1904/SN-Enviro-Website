@@ -11,7 +11,7 @@ const About = ({ isDarkMode }) => {
 
     const aboutText = settings?.about_text || "Founded in January 2017 by a team of seasoned technocrats with over **100 years of combined experience**, SN Enviro Solutions has become a trusted name in online environmental monitoring solutions.";
     const aboutImage = settings?.about_image 
-        ? (settings.about_image.startsWith('http') ? settings.about_image : `http://localhost:5000/${settings.about_image}`)
+        ? (settings.about_image.startsWith('http') ? settings.about_image : `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${settings.about_image}`)
         : "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=2070";
 
     return (

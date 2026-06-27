@@ -14,7 +14,7 @@ const AdminAbout = ({ isDarkMode }) => {
 
     const fetchSettings = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/settings');
+            const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/settings');
             if (res.data.about_text) setAboutText(res.data.about_text);
             if (res.data.about_image) setCurrentImage(res.data.about_image);
         } catch (error) {
@@ -34,7 +34,7 @@ const AdminAbout = ({ isDarkMode }) => {
         }
 
         try {
-            await axios.post('http://localhost:5000/api/settings', formData, {
+            await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/settings', formData, {
                 headers: { 
                     'x-auth-token': token,
                     'Content-Type': 'multipart/form-data'
@@ -75,7 +75,7 @@ const AdminAbout = ({ isDarkMode }) => {
                         <div className="mb-4">
                             <p className="text-sm mb-2">Current Image:</p>
                             <img 
-                                src={currentImage.startsWith('http') ? currentImage : `http://localhost:5000/${currentImage}`} 
+                                src={currentImage.startsWith('http') ? currentImage : `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${currentImage}`} 
                                 alt="Current About" 
                                 className="h-40 rounded-xl object-cover"
                             />

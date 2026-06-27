@@ -22,7 +22,7 @@ const AdminProducts = ({ isDarkMode }) => {
     const fetchProducts = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:5000/api/products');
+            const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/products');
             setProducts(res.data);
         } catch (error) {
             console.error('Error fetching products', error);
@@ -45,11 +45,11 @@ const AdminProducts = ({ isDarkMode }) => {
 
         try {
             if (editingProduct) {
-                await axios.put(`http://localhost:5000/api/products/${editingProduct._id}`, formData, {
+                await axios.put(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/products/${editingProduct._id}`, formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             } else {
-                await axios.post('http://localhost:5000/api/products', formData, {
+                await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/products', formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             }
@@ -65,7 +65,7 @@ const AdminProducts = ({ isDarkMode }) => {
         if (!window.confirm('Are you sure you want to delete this product?')) return;
         const token = localStorage.getItem('adminToken');
         try {
-            await axios.delete(`http://localhost:5000/api/products/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/products/${id}`, {
                 headers: { 'x-auth-token': token }
             });
             fetchProducts();
@@ -197,7 +197,7 @@ const AdminProducts = ({ isDarkMode }) => {
                                         <td className="p-4">
                                             <div className="w-12 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-white flex items-center justify-center overflow-hidden">
                                                 <img
-                                                    src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `http://localhost:5000/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
+                                                    src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
                                                     alt={product.title}
                                                     className="max-w-full max-h-full object-contain"
                                                     onError={(e) => { e.target.src = '/assets/logo.png'; }}

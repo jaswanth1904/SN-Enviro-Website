@@ -21,7 +21,7 @@ const AdminTestimonials = ({ isDarkMode }) => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:5000/api/testimonials');
+            const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/testimonials');
             setItems(res.data);
         } catch (error) {
             console.error('Error fetching data', error);
@@ -43,11 +43,11 @@ const AdminTestimonials = ({ isDarkMode }) => {
 
         try {
             if (editingItem) {
-                await axios.put(`http://localhost:5000/api/testimonials/${editingItem._id}`, formData, {
+                await axios.put(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/testimonials/${editingItem._id}`, formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             } else {
-                await axios.post('http://localhost:5000/api/testimonials', formData, {
+                await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/testimonials', formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             }
@@ -63,7 +63,7 @@ const AdminTestimonials = ({ isDarkMode }) => {
         if (!window.confirm('Are you sure you want to delete?')) return;
         const token = localStorage.getItem('adminToken');
         try {
-            await axios.delete(`http://localhost:5000/api/testimonials/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/testimonials/${id}`, {
                 headers: { 'x-auth-token': token }
             });
             fetchData();
@@ -163,7 +163,7 @@ const AdminTestimonials = ({ isDarkMode }) => {
                                 <td className="p-4">
                                     <div className="h-10 w-10 bg-slate-200 rounded-full flex items-center justify-center overflow-hidden">
                                         {item.avatarUrl ? (
-                                            <img src={item.avatarUrl.startsWith('uploads/') ? `http://localhost:5000/${item.avatarUrl}` : item.avatarUrl} alt={item.name} className="h-full w-full object-cover" />
+                                            <img src={item.avatarUrl.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${item.avatarUrl}` : item.avatarUrl} alt={item.name} className="h-full w-full object-cover" />
                                         ) : (
                                             <span className="font-bold text-slate-500">{item.name.charAt(0)}</span>
                                         )}

@@ -17,7 +17,7 @@ const AdminSettings = ({ isDarkMode }) => {
         const fetchSettings = async () => {
             setLoading(true);
             try {
-                const res = await axios.get('http://localhost:5000/api/settings');
+                const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/settings');
                 // Merge fetched settings over default settings
                 setSettings(prev => ({ ...prev, ...res.data }));
             } catch (err) {
@@ -41,7 +41,7 @@ const AdminSettings = ({ isDarkMode }) => {
         setSaving(true);
         const token = localStorage.getItem('adminToken');
         try {
-            await axios.post('http://localhost:5000/api/settings', settings, {
+            await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/settings', settings, {
                 headers: { 'x-auth-token': token }
             });
             alert('Settings saved successfully!');

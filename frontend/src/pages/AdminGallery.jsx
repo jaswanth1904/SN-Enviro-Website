@@ -19,7 +19,7 @@ const AdminGallery = ({ isDarkMode }) => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:5000/api/gallery');
+            const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/gallery');
             setItems(res.data);
         } catch (error) {
             console.error('Error fetching data', error);
@@ -39,11 +39,11 @@ const AdminGallery = ({ isDarkMode }) => {
 
         try {
             if (editingItem) {
-                await axios.put(`http://localhost:5000/api/gallery/${editingItem._id}`, formData, {
+                await axios.put(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/gallery/${editingItem._id}`, formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             } else {
-                await axios.post('http://localhost:5000/api/gallery', formData, {
+                await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/gallery', formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             }
@@ -59,7 +59,7 @@ const AdminGallery = ({ isDarkMode }) => {
         if (!window.confirm('Are you sure you want to delete?')) return;
         const token = localStorage.getItem('adminToken');
         try {
-            await axios.delete(`http://localhost:5000/api/gallery/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/gallery/${id}`, {
                 headers: { 'x-auth-token': token }
             });
             fetchData();
@@ -132,7 +132,7 @@ const AdminGallery = ({ isDarkMode }) => {
                 {items.map(item => (
                     <div key={item._id} className={`rounded-xl border overflow-hidden shadow-sm group relative ${isDarkMode ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-white'}`}>
                         <div className="aspect-video bg-slate-100 flex items-center justify-center overflow-hidden relative">
-                            <img src={item.imageUrl?.startsWith('uploads/') ? `http://localhost:5000/${item.imageUrl}` : item.imageUrl} alt={item.title} className="w-full h-full object-cover" />
+                            <img src={item.imageUrl?.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${item.imageUrl}` : item.imageUrl} alt={item.title} className="w-full h-full object-cover" />
                             {/* Actions Overlay */}
                             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                                 <button onClick={() => handleEdit(item)} className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"><Edit2 size={16} /></button>

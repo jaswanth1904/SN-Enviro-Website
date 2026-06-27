@@ -71,8 +71,6 @@ app.use((req, res, next) => {
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGO_URI;
 
-mongoose.set('bufferCommands', false);
-
 mongoose.connect(MONGODB_URI, { family: 4 })
     .then(() => console.log('✅ Connected to MongoDB Atlas'))
     .catch((err) => console.error('❌ MongoDB Connection Error:', err));

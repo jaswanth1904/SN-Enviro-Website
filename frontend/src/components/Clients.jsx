@@ -61,7 +61,7 @@ const Clients = ({ isDarkMode }) => {
                                 key={index}
                                 className={`flex flex-col items-center justify-center p-6 w-48 h-40 rounded-2xl grayscale hover:grayscale-0 transition-all duration-500 border shrink-0 gap-4 ${isDarkMode ? 'bg-slate-800/30 border-slate-700' : 'bg-white border-slate-100 hover:shadow-xl'}`}
                             >
-                                <img src={client.logoUrl?.startsWith('uploads/') ? `http://localhost:5000/${client.logoUrl}` : client.logoUrl} alt={client.name} className="max-w-full h-16 object-contain opacity-70 hover:opacity-100 transition-opacity drop-shadow-md" />
+                                <img src={client.logoUrl?.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${client.logoUrl}` : client.logoUrl} alt={client.name} className="max-w-full h-16 object-contain opacity-70 hover:opacity-100 transition-opacity drop-shadow-md" />
                                 <span className={`text-center font-bold tracking-wide text-sm ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{client.name}</span>
                             </div>
                         ))}
@@ -85,7 +85,7 @@ const Clients = ({ isDarkMode }) => {
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold overflow-hidden">
                                     {t.avatarUrl ? (
-                                        <img src={t.avatarUrl?.startsWith('uploads/') ? `http://localhost:5000/${t.avatarUrl}` : t.avatarUrl} alt={t.name} className="w-full h-full object-cover" />
+                                        <img src={t.avatarUrl?.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${t.avatarUrl}` : t.avatarUrl} alt={t.name} className="w-full h-full object-cover" />
                                     ) : (
                                         t.name[0]
                                     )}

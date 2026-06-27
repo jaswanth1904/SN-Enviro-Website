@@ -77,7 +77,7 @@ const GalleryStack = ({ images = [], isDarkMode }) => {
                             {/* Image */}
                             <div className="w-full h-full bg-white flex items-center justify-center p-8">
                                 <img
-                                    src={card.imageUrl?.startsWith('uploads/') ? `http://localhost:5000/${card.imageUrl}` : card.imageUrl}
+                                    src={card.imageUrl?.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${card.imageUrl}` : card.imageUrl}
                                     alt={card.title}
                                     className="w-full h-full object-contain select-none pointer-events-none drop-shadow-xl"
                                 />

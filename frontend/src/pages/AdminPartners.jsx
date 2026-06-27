@@ -20,7 +20,7 @@ const AdminPartners = ({ isDarkMode }) => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:5000/api/partners');
+            const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/partners');
             setPartners(res.data);
         } catch (error) {
             console.error('Error fetching data', error);
@@ -40,11 +40,11 @@ const AdminPartners = ({ isDarkMode }) => {
 
         try {
             if (editingItem) {
-                await axios.put(`http://localhost:5000/api/partners/${editingItem._id}`, formData, {
+                await axios.put(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/partners/${editingItem._id}`, formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             } else {
-                await axios.post('http://localhost:5000/api/partners', formData, {
+                await axios.post((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/partners', formData, {
                     headers: { 'x-auth-token': token, 'Content-Type': 'multipart/form-data' }
                 });
             }
@@ -60,7 +60,7 @@ const AdminPartners = ({ isDarkMode }) => {
         if (!window.confirm('Are you sure you want to delete this partner?')) return;
         const token = localStorage.getItem('adminToken');
         try {
-            await axios.delete(`http://localhost:5000/api/partners/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/api/partners/${id}`, {
                 headers: { 'x-auth-token': token }
             });
             fetchData();
@@ -146,7 +146,7 @@ const AdminPartners = ({ isDarkMode }) => {
                             <tr key={item._id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
                                 <td className="p-4">
                                     <div className="h-12 w-24 bg-white rounded border flex items-center justify-center p-2">
-                                        <img src={item.logoUrl?.startsWith('uploads/') ? `http://localhost:5000/${item.logoUrl}` : item.logoUrl} alt={item.name} className="max-h-full max-w-full object-contain" />
+                                        <img src={item.logoUrl?.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${item.logoUrl}` : item.logoUrl} alt={item.name} className="max-h-full max-w-full object-contain" />
                                     </div>
                                 </td>
                                 <td className="p-4 font-medium">{item.name}</td>

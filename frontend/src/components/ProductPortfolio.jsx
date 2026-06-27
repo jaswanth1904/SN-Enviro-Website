@@ -126,7 +126,7 @@ const ProductPortfolio = ({ isDarkMode }) => {
                             {/* Image Container */}
                             <div className="relative aspect-square w-full p-10 flex items-center justify-center transition-all duration-700 bg-white/50 dark:bg-slate-900/20 group-hover:scale-105">
                                 <img
-                                    src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `http://localhost:5000/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
+                                    src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
                                     alt={product.title}
                                     className="max-h-full max-w-full object-contain filter transition-all duration-700 hover:scale-110"
                                     onError={(e) => {

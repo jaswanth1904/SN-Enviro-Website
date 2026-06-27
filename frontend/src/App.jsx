@@ -40,7 +40,7 @@ function App() {
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('visited');
     if (!hasVisited) {
-      fetch('http://localhost:5000/api/visits', {
+      fetch((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/visits', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
