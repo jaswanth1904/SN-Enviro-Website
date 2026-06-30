@@ -77,7 +77,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                 { name: 'NH3 Analyzer', href: '/analyzer/nh3' },
                                 { name: 'CO Analyzer', href: '/analyzer/co' },
                                 { name: 'O3 Analyzer', href: '/analyzer/o3' },
-                                { name: 'PM Monitor', href: '/product/698da53e5bff466e7fbecc3b?tab=product&item=pm' }
+                                { name: 'PM Monitor', href: '/analyzer/pm' }
                             ]
                         }
                     ]
@@ -91,11 +91,11 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             name: 'Product', 
                             href: '/product/698da53e5bff466e7fbecc39?tab=product',
                             nestedItems: [
-                                { name: 'SO2-NO-NO2 Analyzer', href: '/product/698da53e5bff466e7fbecc39?tab=product&item=so2' },
-                                { name: 'CO / CO2 Analyzer', href: '/product/698da53e5bff466e7fbecc39?tab=product&item=co' },
-                                { name: 'Oxygen Analyzer', href: '/product/698da53e5bff466e7fbecc39?tab=product&item=o2' },
-                                { name: 'PM Opacity Monitor', href: '/product/698da53e5bff466e7fbecc39?tab=product&item=pm' },
-                                { name: 'Flow Monitor', href: '/product/698da53e5bff466e7fbecc39?tab=product&item=flow' }
+                                { name: 'SO2-NO-NO2 Analyzer', href: '/analyzer/cems_so2' },
+                                { name: 'CO / CO2 Analyzer', href: '/analyzer/cems_co' },
+                                { name: 'Oxygen Analyzer', href: '/analyzer/cems_o2' },
+                                { name: 'PM Opacity Monitor', href: '/analyzer/cems_pm' },
+                                { name: 'Flow Monitor', href: '/analyzer/cems_flow' }
                             ]
                         }
                     ]
@@ -109,10 +109,10 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             name: 'Product', 
                             href: '/product/698da53e5bff466e7fbecc40?tab=product',
                             nestedItems: [
-                                { name: 'pH/ORP Sensor', href: '/product/698da53e5bff466e7fbecc40?tab=product&item=ph' },
-                                { name: 'COD/BOD Analyzer', href: '/product/698da53e5bff466e7fbecc40?tab=product&item=cod' },
-                                { name: 'TSS Sensor', href: '/product/698da53e5bff466e7fbecc40?tab=product&item=tss' },
-                                { name: 'Electromagnetic Flow Meter', href: '/product/698da53e5bff466e7fbecc40?tab=product&item=flow' }
+                                { name: 'pH/ORP Sensor', href: '/analyzer/eqms_ph' },
+                                { name: 'COD/BOD Analyzer', href: '/analyzer/eqms_cod' },
+                                { name: 'TSS Sensor', href: '/analyzer/eqms_tss' },
+                                { name: 'Electromagnetic Flow Meter', href: '/analyzer/eqms_flow' }
                             ]
                         }
                     ]
@@ -126,9 +126,9 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             name: 'Product', 
                             href: '/product/698da53e5bff466e7fbecc38?tab=product',
                             nestedItems: [
-                                { name: 'Modbus/Analog Gateway', href: '/product/698da53e5bff466e7fbecc38?tab=product&item=gateway' },
-                                { name: 'Remote Calibration Module', href: '/product/698da53e5bff466e7fbecc38?tab=product&item=cal_module' },
-                                { name: 'MQTT Encryption Server Link', href: '/product/698da53e5bff466e7fbecc38?tab=product&item=mqtt_link' }
+                                { name: 'Modbus/Analog Gateway', href: '/analyzer/iiot_gateway' },
+                                { name: 'Remote Calibration Module', href: '/analyzer/iiot_cal' },
+                                { name: 'MQTT Encryption Server Link', href: '/analyzer/iiot_mqtt' }
                             ]
                         }
                     ]
@@ -142,11 +142,11 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             name: 'Product', 
                             href: '/product/698da53e5bff466e7fbecc41?tab=product',
                             nestedItems: [
-                                { name: 'Ultrasonic Wind Sensor', href: '/product/698da53e5bff466e7fbecc41?tab=product&item=wind' },
-                                { name: 'Temp/Humidity Sensor', href: '/product/698da53e5bff466e7fbecc41?tab=product&item=temp_hum' },
-                                { name: 'Rain Gauge', href: '/product/698da53e5bff466e7fbecc41?tab=product&item=rain' },
-                                { name: 'Pyranometer', href: '/product/698da53e5bff466e7fbecc41?tab=product&item=pyrano' },
-                                { name: 'Barometric Pressure Sensor', href: '/product/698da53e5bff466e7fbecc41?tab=product&item=baro' }
+                                { name: 'Ultrasonic Wind Sensor', href: '/analyzer/wms_wind' },
+                                { name: 'Temp/Humidity Sensor', href: '/analyzer/wms_temp' },
+                                { name: 'Rain Gauge', href: '/analyzer/wms_rain' },
+                                { name: 'Pyranometer', href: '/analyzer/wms_pyrano' },
+                                { name: 'Barometric Pressure Sensor', href: '/analyzer/wms_baro' }
                             ]
                         }
                     ]
@@ -160,9 +160,9 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             name: 'Product', 
                             href: '/product/698da53e5bff466e7fbecc42?tab=product',
                             nestedItems: [
-                                { name: 'Compact Gas Node', href: '/product/698da53e5bff466e7fbecc42?tab=product&item=gas_node' },
-                                { name: 'Compact PM Node', href: '/product/698da53e5bff466e7fbecc42?tab=product&item=pm_node' },
-                                { name: 'Noise Level Sensor', href: '/product/698da53e5bff466e7fbecc42?tab=product&item=noise' }
+                                { name: 'Compact Gas Node', href: '/analyzer/smart_gas' },
+                                { name: 'Compact PM Node', href: '/analyzer/smart_pm' },
+                                { name: 'Noise Level Sensor', href: '/analyzer/smart_noise' }
                             ]
                         }
                     ]
@@ -176,10 +176,10 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             name: 'Product', 
                             href: '/product/698da53e5bff466e7fbecc43?tab=product',
                             nestedItems: [
-                                { name: 'Electromagnetic Flow Meter', href: '/product/698da53e5bff466e7fbecc43?tab=product&item=flow_meter' },
-                                { name: 'Radar Level Transmitter', href: '/product/698da53e5bff466e7fbecc43?tab=product&item=radar_level' },
-                                { name: 'Pressure Transmitter', href: '/product/698da53e5bff466e7fbecc43?tab=product&item=pressure' },
-                                { name: 'Analytical Electrodes', href: '/product/698da53e5bff466e7fbecc43?tab=product&item=electrodes' }
+                                { name: 'Electromagnetic Flow Meter', href: '/analyzer/adv_flow' },
+                                { name: 'Radar Level Transmitter', href: '/analyzer/adv_radar' },
+                                { name: 'Pressure Transmitter', href: '/analyzer/adv_pressure' },
+                                { name: 'Analytical Electrodes', href: '/analyzer/adv_electrodes' }
                             ]
                         }
                     ]

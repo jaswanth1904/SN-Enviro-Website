@@ -3,120 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ChevronRight, Activity, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Analyzer Database
-const analyzerData = {
-    so2: {
-        id: "so2",
-        name: "Ambient Sulphur Dioxide (SO₂) Analyser",
-        category: "CAAQMS Reference Analyzer",
-        desc: "Measures trace sulfur dioxide using UV light excitation at 214nm, filtering out atmospheric interferents.",
-        specs: [
-            { label: "Principle", value: "Pulsed UV Fluorescence" },
-            { label: "Measurement", value: "SO₂ in Ambient Air" },
-            { label: "Display", value: "Digital" },
-            { label: "Ranges", value: "Auto ranging 0 - 200 ppb" },
-            { label: "Lower Detectable Limit", value: "1 ppb" },
-            { label: "Noise Level", value: "0.5 ppb" },
-            { label: "Zero Drift", value: "< 1 ppb/24 Hrs. with automatic zero compensation" },
-            { label: "Span Drift", value: "<1 ppb in 24 hrs." },
-            { label: "Linearity", value: "± 1% of full scale" },
-            { label: "Response Time", value: "120 sec or less" },
-            { label: "Span check facility", value: "Built in permeation bench" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multiple drop RS 232, USB port /TCP/IP, Ethernet" }
-        ]
-    },
-    nox: {
-        id: "nox",
-        name: "Ambient Oxides of Nitrogen (NO-NO₂-NOx) Analyser",
-        category: "CAAQMS Reference Analyzer",
-        desc: "Measures nitric oxide and nitrogen oxides through the light-emitting reaction of NO with ozone.",
-        specs: [
-            { label: "Principle", value: "Chemiluminiscence" },
-            { label: "Measurement", value: "NO-NO₂-NOx in Ambient Air" },
-            { label: "Display", value: "Digital" },
-            { label: "Ranges", value: "Auto ranging 0-2000 ppb" },
-            { label: "Lower Detectable Limit", value: "1 ppb" },
-            { label: "Noise Level", value: "0.5 ppb" },
-            { label: "Zero Drift", value: "< 1 ppb/24 Hrs." },
-            { label: "Span Drift", value: "< 2% in 15 days of full scale" },
-            { label: "Linearity", value: "± 1% of full scale" },
-            { label: "Response Time", value: "120 sec or less" },
-            { label: "Span Check", value: "Built in permeation bench" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multi drop RS 232 port, USB port /TCP/IP, Ethernet" }
-        ]
-    },
-    nh3: {
-        id: "nh3",
-        name: "Ambient Ammonia (NH₃) Analyser",
-        category: "CAAQMS Reference Analyzer",
-        desc: "Measures ambient ammonia using chemical conversion and subsequent chemiluminescence.",
-        specs: [
-            { label: "Principle", value: "Chemiluminiscence (NH₃ conversion to NO by oxidation. NO₂ also converted to NO. The difference obtained by measuring NO in output of two sample stream is equal to NH₃)" },
-            { label: "Measurement", value: "NH₃ in Ambient Air" },
-            { label: "Display", value: "Digital" },
-            { label: "Ranges", value: "Auto ranging 0-1000 ppb" },
-            { label: "Lower Detectable Limit", value: "1 ppb" },
-            { label: "Noise Level", value: "0.2% of reading" },
-            { label: "Zero Drift", value: "< 5 ppb /24 Hrs." },
-            { label: "Span Drift", value: "< 2% in 15 days of full scale" },
-            { label: "NH3/NO converter", value: "Quartz at approx. 1000°C" },
-            { label: "Linearity", value: "± 1% of full scale" },
-            { label: "Response time", value: "180 second" },
-            { label: "Rise / fall Time", value: "< 30 Sec (95% of the final value)" },
-            { label: "Span Check facility", value: "Built in permeation bench" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA /4 – 20 mA and Digital output" },
-            { label: "Digital Output", value: "Multi drop RS 232 port, USB port /TCP/IP, Ethernet" }
-        ]
-    },
-    co: {
-        id: "co",
-        name: "Ambient Carbon Monoxide (CO) Analyser",
-        category: "CAAQMS Reference Analyzer",
-        desc: "Utilizes gas filter correlation spectroscopy to eliminate carbon dioxide and water vapor interference.",
-        specs: [
-            { label: "Principle", value: "Non Dispersive Infra-Red (NDIR) with Gas Filter Correlation" },
-            { label: "Measurement", value: "CO in Ambient Air" },
-            { label: "Display", value: "Digital" },
-            { label: "Ranges", value: "Auto ranging 0 - 100 ppm" },
-            { label: "Lower Detectable Limit", value: "0.1 ppm" },
-            { label: "Noise Level", value: "0.05 ppm with time constant 30 seconds" },
-            { label: "Zero Drift", value: "< 0.2 ppm/7 days" },
-            { label: "Span Drift", value: "< 1% full scale in 24 hrs." },
-            { label: "Linearity", value: "Continuous ± 1%" },
-            { label: "Response Time", value: "30 seconds or less" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multiple drop RS 232port, USB port /TCP/IP, Ethernet" }
-        ]
-    },
-    o3: {
-        id: "o3",
-        name: "Ambient Ozone (O₃) Analyser",
-        category: "CAAQMS Reference Analyzer",
-        desc: "Measures absorption of UV light at 254nm within a dual-path cell to compute ground-level ozone.",
-        specs: [
-            { label: "Principle", value: "UV Photometric / Chemiluminiscence" },
-            { label: "Measurement", value: "O₃ in Ambient Air" },
-            { label: "Display", value: "Digital" },
-            { label: "Range", value: "Auto ranging 0 - 500 ppb" },
-            { label: "Lower Detectable Limit", value: "1.0 ppb" },
-            { label: "Noise level", value: "± 0.5 ppb" },
-            { label: "Zero Drift", value: "< ½% per month" },
-            { label: "Span Drift", value: "< 1% per month" },
-            { label: "Linearity", value: "Continuous ± 1%" },
-            { label: "Response Time", value: "30 seconds or less" },
-            { label: "Calibration", value: "Built in Zero and span generator & Multi-calibration section" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multiple drop RS 232 port, USB port /TCP/IP, Ethernet" }
-        ]
-    }
-};
-
+import { analyzerData } from '../data/analyzerData';
 const AnalyzerDetails = ({ isDarkMode }) => {
     const { id } = useParams();
     
@@ -168,7 +55,7 @@ const AnalyzerDetails = ({ isDarkMode }) => {
                 >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none -z-10" />
                     <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
-                        <div className="flex-1">
+                        <div className="flex-1 w-full">
                             <span className="text-emerald-500 font-bold uppercase tracking-widest text-xs mb-3 block">
                                 {data.category}
                             </span>
@@ -178,12 +65,6 @@ const AnalyzerDetails = ({ isDarkMode }) => {
                             <p className={`text-base md:text-lg leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                                 {data.desc}
                             </p>
-                        </div>
-                        <div className="hidden md:flex w-full md:w-1/3 shrink-0">
-                            {/* Abstract Icon/Image Representation */}
-                            <div className={`w-full aspect-square rounded-2xl flex items-center justify-center border shadow-inner ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                                <Activity size={80} className="text-emerald-500/30" />
-                            </div>
                         </div>
                     </div>
                 </motion.div>
