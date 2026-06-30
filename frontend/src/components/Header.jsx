@@ -15,6 +15,39 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSubMenu, setActiveSubMenu] = useState(null);
     const [activeNestedMenu, setActiveNestedMenu] = useState(null);
+    
+    // Timeout ref to handle forgiving dropdown close
+    const leaveTimeout = React.useRef(null);
+
+    const handleMouseEnterSub = (name) => {
+        if (leaveTimeout.current) clearTimeout(leaveTimeout.current);
+        setActiveSubMenu(name);
+    };
+
+    const handleMouseLeaveSub = () => {
+        leaveTimeout.current = setTimeout(() => {
+            setActiveSubMenu(null);
+            setActiveNestedMenu(null);
+        }, 250);
+    };
+
+    const handleMouseEnterNested = (name) => {
+        if (leaveTimeout.current) clearTimeout(leaveTimeout.current);
+        setActiveNestedMenu(name);
+    };
+
+    const handleMouseLeaveNested = () => {
+        leaveTimeout.current = setTimeout(() => {
+            setActiveNestedMenu(null);
+        }, 250);
+    };
+
+    const handleTopLeave = () => {
+        leaveTimeout.current = setTimeout(() => {
+            setActiveSubMenu(null);
+            setActiveNestedMenu(null);
+        }, 250);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -190,7 +223,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                 <nav className="hidden lg:flex items-center gap-10">
                     <ul className="flex items-center gap-8">
                         {navLinks.map((link) => (
-                            <li key={link.name} className="relative group" onMouseLeave={() => setActiveSubMenu(null)}>
+                            <li key={link.name} className="relative group" onMouseLeave={handleTopLeave} onMouseEnter={() => { if (leaveTimeout.current) clearTimeout(leaveTimeout.current); }}>
                                 <CustomLink
                                     href={link.href}
                                     className={`text-sm font-bold uppercase tracking-widest no-underline transition-all hover:text-emerald-500 flex items-center gap-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'
@@ -209,8 +242,8 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                                     {dropItem.subItems ? (
                                                         <div 
                                                             className="relative"
-                                                            onMouseEnter={() => setActiveSubMenu(dropItem.name)}
-                                                            onMouseLeave={() => {setActiveSubMenu(null); setActiveNestedMenu(null);}}
+                                                            onMouseEnter={() => handleMouseEnterSub(dropItem.name)}
+                                                            onMouseLeave={handleMouseLeaveSub}
                                                         >
                                                             <button
                                                                 onClick={(e) => {
@@ -225,14 +258,14 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
 
                                                             {/* Nested Sub-menu */}
                                                             {activeSubMenu === dropItem.name && (
-                                                                <div className={`mt-1 ml-4 pl-4 border-l-2 border-emerald-500/20 space-y-1`}>
+                                                                <div className={`pt-1 ml-4 pl-4 border-l-2 border-emerald-500/20 space-y-1`}>
                                                                     {dropItem.subItems.map((sub) => (
                                                                         <div key={sub.name} className="relative">
                                                                             {sub.nestedItems ? (
                                                                                 <div 
                                                                                     className="relative"
-                                                                                    onMouseEnter={() => setActiveNestedMenu(sub.name)}
-                                                                                    onMouseLeave={() => setActiveNestedMenu(null)}
+                                                                                    onMouseEnter={() => handleMouseEnterNested(sub.name)}
+                                                                                    onMouseLeave={handleMouseLeaveNested}
                                                                                 >
                                                                                     <button
                                                                                         onClick={(e) => {
@@ -249,7 +282,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                                                                     
                                                                                     {/* Nested Fly-out (Side Dropdown) */}
                                                                                     {activeNestedMenu === sub.name && (
-                                                                                        <div className="absolute left-full top-0 ml-2 pt-0 min-w-[200px] z-[120]">
+                                                                                        <div className="absolute left-full top-0 pl-2 pt-0 min-w-[200px] z-[120]">
                                                                                             <div className={`p-3 rounded-xl shadow-2xl border space-y-1 ${
                                                                                                 isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'
                                                                                             }`}>
