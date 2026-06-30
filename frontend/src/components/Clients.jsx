@@ -16,7 +16,6 @@ const Clients = ({ isDarkMode }) => {
             { name: "Vedanta (Balco)", logoUrl: "/assets/logos/vedanta.png" },
             { name: "Cipla", logoUrl: "/assets/logos/cipla.png" },
             { name: "Saint Gobain", logoUrl: "/assets/logos/saint.png" },
-            { name: "Nuvoco Group", logoUrl: "/assets/logos/nuvoco.png" },
             { name: "Sree Cements", logoUrl: "/assets/logos/sree.png" }
         ];
 
