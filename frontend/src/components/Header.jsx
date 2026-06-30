@@ -39,10 +39,11 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             name: 'Product', 
                             href: '/product/698da53e5bff466e7fbecc3b?tab=product',
                             nestedItems: [
-                                { name: 'SO2 Analyzer', href: '/product/698da53e5bff466e7fbecc3b?tab=product&item=so2' },
-                                { name: 'NO-NO2-NOx Analyzer', href: '/product/698da53e5bff466e7fbecc3b?tab=product&item=nox' },
-                                { name: 'CO Analyzer', href: '/product/698da53e5bff466e7fbecc3b?tab=product&item=co' },
-                                { name: 'O3 Analyzer', href: '/product/698da53e5bff466e7fbecc3b?tab=product&item=o3' },
+                                { name: 'SO2 Analyzer', href: '/analyzer/so2' },
+                                { name: 'NO-NO2-NOx Analyzer', href: '/analyzer/nox' },
+                                { name: 'NH3 Analyzer', href: '/analyzer/nh3' },
+                                { name: 'CO Analyzer', href: '/analyzer/co' },
+                                { name: 'O3 Analyzer', href: '/analyzer/o3' },
                                 { name: 'PM Monitor', href: '/product/698da53e5bff466e7fbecc3b?tab=product&item=pm' }
                             ]
                         }
