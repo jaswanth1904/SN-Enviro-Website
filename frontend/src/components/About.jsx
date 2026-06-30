@@ -12,7 +12,7 @@ const About = ({ isDarkMode }) => {
     const aboutText = settings?.about_text || "Founded in January 2017 by a team of seasoned technocrats with over **100 years of combined experience**, SN Enviro Solutions has become a trusted name in online environmental monitoring solutions.";
     const aboutImage = settings?.about_image 
         ? (settings.about_image.startsWith('http') ? settings.about_image : `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${settings.about_image}`)
-        : "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=2070";
+        : "/assets/team-photo.jpg";
 
     return (
         <section id="about" className={`py-12 md:py-20 lg:py-32 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
@@ -31,7 +31,7 @@ const About = ({ isDarkMode }) => {
                             <img
                                 src={aboutImage}
                                 alt="Environmental Monitoring Team"
-                                className="w-full h-[350px] md:h-[500px] object-cover transform transition-transform duration-700 group-hover:scale-105"
+                                className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
                             />
                         </div>
 
