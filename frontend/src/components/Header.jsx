@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Sun, Moon, User, Menu, X, ArrowRight, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import logo from '/assets/logo.png';
+
+const CustomLink = ({ href, children, className, onClick, ...props }) => {
+    if (href?.startsWith('/#') || href?.startsWith('#')) {
+        return <a href={href} className={className} onClick={onClick} {...props}>{children}</a>;
+    }
+    return <Link to={href} className={className} onClick={onClick} {...props}>{children}</Link>;
+};
 
 const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
     const [scrolled, setScrolled] = useState(false);
@@ -162,7 +170,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
         >
             <div className="container mx-auto px-6 flex justify-between items-center">
                 {/* Logo */}
-                <a href="/" className="flex items-center gap-3 group no-underline">
+                <CustomLink href="/" className="flex items-center gap-3 group no-underline">
                     <div className="w-12 h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                         <img
                             src={logo}
@@ -175,21 +183,21 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                             SN ENVIRO
                         </span>
                     </div>
-                </a>
+                </CustomLink>
 
                 {/* Desktop Nav */}
                 <nav className="hidden lg:flex items-center gap-10">
                     <ul className="flex items-center gap-8">
                         {navLinks.map((link) => (
                             <li key={link.name} className="relative group" onMouseLeave={() => setActiveSubMenu(null)}>
-                                <a
+                                <CustomLink
                                     href={link.href}
                                     className={`text-sm font-bold uppercase tracking-widest no-underline transition-all hover:text-emerald-500 flex items-center gap-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'
                                         }`}
                                 >
                                     {link.name}
                                     {link.dropdown && <ChevronDown size={14} />}
-                                </a>
+                                </CustomLink>
 
                                 {/* Dropdown Menu */}
                                 {link.dropdown && (
@@ -245,7 +253,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                                                                                 isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-100'
                                                                                             }`}>
                                                                                                 {sub.nestedItems.map((nested) => (
-                                                                                                    <a
+                                                                                                    <CustomLink
                                                                                                         key={nested.name}
                                                                                                         href={nested.href}
                                                                                                         className={`block text-[11px] font-medium py-1.5 px-2 rounded-lg transition-colors no-underline ${
@@ -253,21 +261,21 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                                                                                         }`}
                                                                                                     >
                                                                                                         {nested.name}
-                                                                                                    </a>
+                                                                                                    </CustomLink>
                                                                                                 ))}
                                                                                             </div>
                                                                                         </div>
                                                                                     )}
                                                                                 </div>
                                                                             ) : (
-                                                                                <a
+                                                                                <CustomLink
                                                                                     href={sub.href}
                                                                                     className={`block text-xs font-semibold py-2 px-2 rounded-lg transition-colors no-underline ${
                                                                                         isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'
                                                                                     }`}
                                                                                 >
                                                                                     {sub.name}
-                                                                                </a>
+                                                                                </CustomLink>
                                                                             )}
                                                                         </div>
                                                                     ))}
@@ -275,12 +283,12 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                                             )}
                                                         </div>
                                                     ) : (
-                                                        <a
+                                                        <CustomLink
                                                             href={dropItem.href}
                                                             className={`block text-sm font-bold py-2 px-3 rounded-lg transition-colors ${isDarkMode ? 'text-slate-300 hover:bg-slate-800 hover:text-emerald-500' : 'text-slate-700 hover:bg-slate-50 hover:text-emerald-600'}`}
                                                         >
                                                             {dropItem.name}
-                                                        </a>
+                                                        </CustomLink>
                                                     )}
                                                 </div>
                                             ))}
@@ -351,52 +359,52 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                                                                 </span>
                                                                                 <div className="pl-4 flex flex-col gap-2">
                                                                                     {nested.nestedItems.map(subNested => (
-                                                                                        <a
+                                                                                        <CustomLink
                                                                                             key={subNested.name}
                                                                                             href={subNested.href}
                                                                                             onClick={() => setMobileMenuOpen(false)}
                                                                                             className={`text-sm font-semibold no-underline transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'}`}
                                                                                         >
                                                                                             {subNested.name}
-                                                                                        </a>
+                                                                                        </CustomLink>
                                                                                     ))}
                                                                                 </div>
                                                                             </>
                                                                         ) : (
-                                                                            <a
+                                                                            <CustomLink
                                                                                 href={nested.href}
                                                                                 onClick={() => setMobileMenuOpen(false)}
                                                                                 className={`text-base font-medium no-underline transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'}`}
                                                                             >
                                                                                 {nested.name}
-                                                                            </a>
+                                                                            </CustomLink>
                                                                         )}
                                                                     </div>
                                                                 ))}
                                                             </div>
                                                         </div>
                                                     ) : (
-                                                        <a
+                                                        <CustomLink
                                                             href={subLink.href}
                                                             onClick={() => setMobileMenuOpen(false)}
                                                             className={`text-lg font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}
                                                         >
                                                             {subLink.name}
-                                                        </a>
+                                                        </CustomLink>
                                                     )}
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
                                 ) : (
-                                    <a
+                                    <CustomLink
                                         href={link.href}
                                         onClick={() => setMobileMenuOpen(false)}
                                         className={`text-2xl font-bold flex justify-between items-center group no-underline ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
                                     >
                                         {link.name}
                                         <ArrowRight size={24} className="text-emerald-500 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
-                                    </a>
+                                    </CustomLink>
                                 )}
                             </div>
                         ))}
