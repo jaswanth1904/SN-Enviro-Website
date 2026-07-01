@@ -13,18 +13,30 @@ const seedEmployees = async () => {
             {
                 employeeId: 'SNE102',
                 name: 'Jaswanth',
-                role: 'Senior Software Engineer',
-                department: 'Engineering',
+                role: 'Engineering',
+                designation: 'Senior Software Engineer',
+                department: 'Web Development',
                 email: 'jaswanth@sn-enviro.com',
-                phone: '+91 9876543210'
+                phone: '+91 9876543210',
+                joinDate: new Date('2021-08-15'),
+                techSkills: ['React', 'Node.js', 'MongoDB', 'Tailwind CSS', 'Framer Motion'],
+                location: 'Hyderabad, India',
+                reportingManager: 'Sarah Connor',
+                bio: 'Passionate about building scalable web applications and intuitive user interfaces for environmental monitoring systems.'
             },
             {
                 employeeId: 'SNE103',
                 name: 'John Doe',
-                role: 'Environmental Analyst',
-                department: 'Research',
+                role: 'Research',
+                designation: 'Environmental Analyst',
+                department: 'R&D',
                 email: 'johndoe@sn-enviro.com',
-                phone: '+91 9876543211'
+                phone: '+91 9876543211',
+                joinDate: new Date('2022-03-01'),
+                techSkills: ['Data Analysis', 'Python', 'QGIS', 'Environmental Science'],
+                location: 'Bangalore, India',
+                reportingManager: 'Dr. Alan Grant',
+                bio: 'Specializes in analyzing continuous emission data and modeling environmental impacts.'
             }
         ];
 

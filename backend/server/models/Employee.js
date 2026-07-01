@@ -30,6 +30,28 @@ const employeeSchema = new mongoose.Schema({
     profileImage: {
         type: String,
         default: 'https://ui-avatars.com/api/?name=Employee'
+    },
+    designation: {
+        type: String,
+        required: true
+    },
+    joinDate: {
+        type: Date,
+        required: true
+    },
+    techSkills: {
+        type: [String],
+        default: []
+    },
+    location: {
+        type: String,
+        default: 'Headquarters'
+    },
+    reportingManager: {
+        type: String
+    },
+    bio: {
+        type: String
     }
 }, {
     timestamps: true
