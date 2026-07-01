@@ -47,6 +47,9 @@ const employeeSchema = new mongoose.Schema({
         type: String,
         default: 'Headquarters'
     },
+    bloodGroup: {
+        type: String
+    },
     reportingManager: {
         type: String
     },

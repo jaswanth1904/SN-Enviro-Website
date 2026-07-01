@@ -37,6 +37,21 @@ const seedEmployees = async () => {
                 location: 'Bangalore, India',
                 reportingManager: 'Dr. Alan Grant',
                 bio: 'Specializes in analyzing continuous emission data and modeling environmental impacts.'
+            },
+            {
+                employeeId: 'SNE112',
+                name: 'A.V. Sai Jaswanth',
+                role: 'Engineering',
+                designation: 'Software Developer',
+                department: 'Software Development',
+                email: 'sai.jaswanth@sn-enviro.com',
+                phone: '+91 7995511792',
+                joinDate: new Date('2022-04-19'),
+                bloodGroup: 'B+',
+                techSkills: ['React', 'JavaScript', 'Node.js'],
+                location: 'HYD',
+                reportingManager: 'Sarah Connor',
+                bio: 'Passionate software developer focusing on modern web technologies.'
             }
         ];
 

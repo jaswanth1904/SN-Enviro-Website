@@ -182,9 +182,9 @@ const EmployeePortal = ({ isDarkMode }) => {
                             </div>
 
                             {/* Profile Info Row (Overlaps Banner) */}
-                            <div className="px-8 pb-8 md:px-12 relative flex flex-col md:flex-row gap-6 md:items-end -mt-20 md:-mt-24">
-                                {/* Avatar */}
-                                <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl border-4 shadow-2xl overflow-hidden shrink-0 bg-white relative z-10" style={{ borderColor: isDarkMode ? '#0f172a' : '#ffffff' }}>
+                            <div className="px-8 pb-8 md:px-12 relative">
+                                {/* Avatar (Absolute Positioned) */}
+                                <div className="absolute -top-16 md:-top-20 left-8 md:left-12 w-32 h-32 md:w-40 md:h-40 rounded-3xl border-4 shadow-2xl overflow-hidden bg-white z-20" style={{ borderColor: isDarkMode ? '#0f172a' : '#ffffff' }}>
                                     <img 
                                         src={employee.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(employee.name)}&background=10b981&color=fff&size=256`} 
                                         alt={employee.name} 
@@ -193,16 +193,24 @@ const EmployeePortal = ({ isDarkMode }) => {
                                 </div>
 
                                 {/* Name & Badges */}
-                                <div className="flex-1 pt-4 md:pt-0 pb-2 z-10">
-                                    <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
+                                <div className="pt-20 md:pt-4 md:pl-[180px] pb-2 z-10 relative">
+                                    <div className="flex flex-col md:flex-row md:items-start gap-4 justify-between">
                                         <div>
-                                            <h1 className={`text-4xl md:text-5xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                            <h1 className={`text-4xl md:text-5xl font-bold mb-2 break-words ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                                                 {employee.name}
                                             </h1>
-                                            <div className="flex flex-wrap items-center gap-3 text-lg font-medium">
+                                            <div className="flex flex-wrap items-center gap-3 text-lg font-medium mt-2">
                                                 <span className="text-emerald-500">{employee.designation || employee.role}</span>
                                                 <span className="text-slate-400 hidden md:inline">•</span>
                                                 <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500'}>{employee.department}</span>
+                                                {employee.bloodGroup && (
+                                                    <>
+                                                        <span className="text-slate-400 hidden md:inline">•</span>
+                                                        <span className="bg-red-500/10 text-red-500 px-2 py-0.5 rounded text-sm font-bold border border-red-500/20 flex items-center gap-1">
+                                                            Blood: {employee.bloodGroup}
+                                                        </span>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                         
