@@ -16,6 +16,7 @@ const Home = lazy(() => import('./pages/Home'));
 const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const AnalyzerDetails = lazy(() => import('./pages/AnalyzerDetails'));
+const EmployeePortal = lazy(() => import('./pages/EmployeePortal'));
 
 // Loading Fallback
 const LoadingFallback = () => (
@@ -86,6 +87,11 @@ function App() {
               <Route path="/analyzer/:id" element={
                 <PublicLayout isDarkMode={isDarkMode} toggleTheme={toggleTheme} onOpenPartnerPortal={() => setIsPortalOpen(true)}>
                   <AnalyzerDetails isDarkMode={isDarkMode} />
+                </PublicLayout>
+              } />
+              <Route path="/employee" element={
+                <PublicLayout isDarkMode={isDarkMode} toggleTheme={toggleTheme} onOpenPartnerPortal={() => setIsPortalOpen(true)}>
+                  <EmployeePortal isDarkMode={isDarkMode} />
                 </PublicLayout>
               } />
 

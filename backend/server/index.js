@@ -20,6 +20,7 @@ import settingRoutes from './routes/settingRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import visitRoutes from './routes/visitRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
+import employeeRoutes from './routes/employeeRoutes.js';
 
 dotenv.config({ path: './server/.env' });
 
@@ -86,6 +87,7 @@ app.use('/api/settings', settingRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/visits', visitRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/employees', employeeRoutes);
 
 // Serve static uploads
 app.use('/uploads', express.static('uploads'));

@@ -190,7 +190,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
         { name: 'Clients', href: '/#clients' },
         { name: 'About', href: '/#about' },
         { name: 'Contact', href: '/#contact' },
-        { name: 'Admin Portal', href: '/admin' },
+        { name: 'Employee Portal', href: '/employee' },
     ];
 
     return (
