@@ -9,7 +9,7 @@ import Clients from '../components/Clients';
 import Gallery from '../components/Gallery';
 import Certifications from '../components/Certifications';
 import Careers from '../components/Careers';
-import Blog from '../components/Blog';
+import LifeAtSnEnviro from '../components/LifeAtSnEnviro';
 import MapSection from '../components/MapSection';
 import Contact from '../components/Contact';
 
@@ -38,7 +38,7 @@ const Home = ({ isDarkMode }) => {
             <Gallery isDarkMode={isDarkMode} />
             <Certifications isDarkMode={isDarkMode} />
             <Careers isDarkMode={isDarkMode} />
-            <Blog isDarkMode={isDarkMode} />
+            <LifeAtSnEnviro isDarkMode={isDarkMode} />
             <Contact isDarkMode={isDarkMode} />
             <MapSection isDarkMode={isDarkMode} />
         </main>
