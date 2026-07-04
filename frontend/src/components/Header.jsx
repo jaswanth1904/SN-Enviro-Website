@@ -189,7 +189,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
         { name: 'Services', href: '/#services' },
         { name: 'Clients', href: '/#clients' },
         { name: 'About', href: '/#about' },
-        { name: 'Contact', href: '/#contact' },
+        { name: 'Life at SN Enviro', href: '/#life-at-sn' },
         { name: 'Employee Portal', href: '/employee' },
     ];
 
