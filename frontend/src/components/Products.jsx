@@ -13,7 +13,7 @@ const Products = ({ isDarkMode }) => {
             category: "Ambient Monitoring",
             desc: "Complete self-contained stations for precise urban air quality management.",
             details: "Monitors SO2, NOx, CO, Ozone, PM10, and PM2.5 with reference method analyzers.",
-            imageUrl: "/assets/model_2030.png"
+            imageUrl: "/assets/caaqms_new.jpg"
         },
         {
             _id: "698da53e5bff466e7fbecc39",
