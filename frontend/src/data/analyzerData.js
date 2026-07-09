@@ -10,7 +10,7 @@ export const analyzerData = {
         specs: [
             { label: "Principle", value: "Pulsed UV Fluorescence" },
             { label: "Measurement", value: "SO₂ in Ambient Air" },
-            { label: "Display", value: "Digital" },
+            { label: "Display", value: "LCD" },
             { label: "Ranges", value: "Auto ranging 0 - 200 ppb" },
             { label: "Lower Detectable Limit", value: "1 ppb" },
             { label: "Noise Level", value: "0.5 ppb" },
@@ -18,10 +18,10 @@ export const analyzerData = {
             { label: "Span Drift", value: "<1 ppb in 24 hrs." },
             { label: "Linearity", value: "± 1% of full scale" },
             { label: "Response Time", value: "120 sec or less" },
-            { label: "Span check facility", value: "Built in permeation bench" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multiple drop RS 232, USB port /TCP/IP, Ethernet" }
+            { label: "Span check facility", value: "Built in permeation bench (as an option)" },
+            { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
+            { label: "Analog Output", value: "4-20ma" },
+            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
         ]
     },
     nox: {
@@ -32,7 +32,7 @@ export const analyzerData = {
         specs: [
             { label: "Principle", value: "Chemiluminiscence" },
             { label: "Measurement", value: "NO-NO₂-NOx in Ambient Air" },
-            { label: "Display", value: "Digital" },
+            { label: "Display", value: "LCD" },
             { label: "Ranges", value: "Auto ranging 0-2000 ppb" },
             { label: "Lower Detectable Limit", value: "1 ppb" },
             { label: "Noise Level", value: "0.5 ppb" },
@@ -40,10 +40,10 @@ export const analyzerData = {
             { label: "Span Drift", value: "< 2% in 15 days of full scale" },
             { label: "Linearity", value: "± 1% of full scale" },
             { label: "Response Time", value: "120 sec or less" },
-            { label: "Span Check", value: "Built in permeation bench" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multi drop RS 232 port, USB port /TCP/IP, Ethernet" }
+            { label: "Span check facility", value: "Built in permeation bench (as an option)" },
+            { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
+            { label: "Analog Output", value: "4-20ma" },
+            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
         ]
     },
     nh3: {
@@ -54,7 +54,7 @@ export const analyzerData = {
         specs: [
             { label: "Principle", value: "Chemiluminiscence (NH₃ conversion to NO by oxidation. NO₂ also converted to NO. The difference obtained by measuring NO in output of two sample stream is equal to NH₃)" },
             { label: "Measurement", value: "NH₃ in Ambient Air" },
-            { label: "Display", value: "Digital" },
+            { label: "Display", value: "LCD" },
             { label: "Ranges", value: "Auto ranging 0-1000 ppb" },
             { label: "Lower Detectable Limit", value: "1 ppb" },
             { label: "Noise Level", value: "0.2% of reading" },
@@ -64,10 +64,10 @@ export const analyzerData = {
             { label: "Linearity", value: "± 1% of full scale" },
             { label: "Response time", value: "180 second" },
             { label: "Rise / fall Time", value: "< 30 Sec (95% of the final value)" },
-            { label: "Span Check facility", value: "Built in permeation bench" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA /4 – 20 mA and Digital output" },
-            { label: "Digital Output", value: "Multi drop RS 232 port, USB port /TCP/IP, Ethernet" }
+            { label: "Span check facility", value: "Built in permeation bench (as an option)" },
+            { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
+            { label: "Analog Output", value: "4-20ma" },
+            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
         ]
     },
     co: {
@@ -78,7 +78,7 @@ export const analyzerData = {
         specs: [
             { label: "Principle", value: "Non Dispersive Infra-Red (NDIR) with Gas Filter Correlation" },
             { label: "Measurement", value: "CO in Ambient Air" },
-            { label: "Display", value: "Digital" },
+            { label: "Display", value: "LCD" },
             { label: "Ranges", value: "Auto ranging 0 - 100 ppm" },
             { label: "Lower Detectable Limit", value: "0.1 ppm" },
             { label: "Noise Level", value: "0.05 ppm with time constant 30 seconds" },
@@ -86,9 +86,10 @@ export const analyzerData = {
             { label: "Span Drift", value: "< 1% full scale in 24 hrs." },
             { label: "Linearity", value: "Continuous ± 1%" },
             { label: "Response Time", value: "30 seconds or less" },
-            { label: "Calibration", value: "Multi-calibration section & General Specifications (4.1.7 to 4.1.9)" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multiple drop RS 232port, USB port /TCP/IP, Ethernet" }
+            { label: "Span check facility", value: "Built in permeation bench (as an option)" },
+            { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
+            { label: "Analog Output", value: "4-20ma" },
+            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
         ]
     },
     o3: {
@@ -99,7 +100,7 @@ export const analyzerData = {
         specs: [
             { label: "Principle", value: "UV Photometric / Chemiluminiscence" },
             { label: "Measurement", value: "O₃ in Ambient Air" },
-            { label: "Display", value: "Digital" },
+            { label: "Display", value: "LCD" },
             { label: "Range", value: "Auto ranging 0 - 500 ppb" },
             { label: "Lower Detectable Limit", value: "1.0 ppb" },
             { label: "Noise level", value: "± 0.5 ppb" },
@@ -107,9 +108,10 @@ export const analyzerData = {
             { label: "Span Drift", value: "< 1% per month" },
             { label: "Linearity", value: "Continuous ± 1%" },
             { label: "Response Time", value: "30 seconds or less" },
-            { label: "Calibration", value: "Built in Zero and span generator & Multi-calibration section" },
-            { label: "Analog Output", value: "0 – 1 V, 0 – 10 V, 2 – 20 mA / 4 – 20 mA" },
-            { label: "Digital Output", value: "Multiple drop RS 232 port, USB port /TCP/IP, Ethernet" }
+            { label: "Span check facility", value: "Built in permeation bench (as an option)" },
+            { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
+            { label: "Analog Output", value: "4-20ma" },
+            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
         ]
     },
     pm: {
@@ -120,17 +122,18 @@ export const analyzerData = {
         specs: [
             { label: "Principle", value: "Beta Ray Attenuation (Carbon-14 Source)" },
             { label: "Measurement", value: "PM10 and PM2.5 in Ambient Air" },
-            { label: "Display", value: "Digital Touchscreen" },
+            { label: "Display", value: "LCD" },
             { label: "Range", value: "0 - 1000 µg/m³ or 0 - 10000 µg/m³" },
             { label: "Resolution", value: "0.1 µg/m³" },
             { label: "Filter Tape", value: "Glass fiber filter tape, continuous spool" },
             { label: "Flow Rate", value: "16.7 Liters/Minute (Volumetric controlled)" },
             { label: "Zero Drift", value: "< 2 µg/m³ per 24 hours" },
             { label: "Span Drift", value: "< 2% per month" },
-            { label: "Calibration", value: "Reference Foil validation" },
+            { label: "Span check facility", value: "Built in permeation bench (as an option)" },
+            { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
             { label: "Compliance", value: "US EPA Equivalent Method / EN 16450" },
-            { label: "Analog Output", value: "4 – 20 mA, 0 – 10 V" },
-            { label: "Digital Output", value: "RS-232, RS-485 Modbus, TCP/IP" }
+            { label: "Analog Output", value: "4-20ma" },
+            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
         ]
     },
 
