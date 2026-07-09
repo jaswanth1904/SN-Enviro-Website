@@ -1,5 +1,5 @@
 export const lifeImages = [
-    { id: 1, title: '', category: 'MD', url: '/assets/life/SAS00587.JPG' },
+    { id: 1, title: '', category: 'MD', url: '/assets/life/md.jpg' },
     { id: 2, title: '', category: 'Office', url: '/assets/life/SAS00594.JPG' },
     { id: 3, title: '', category: 'Team', url: '/assets/life/SAS00626.JPG' },
     { id: 4, title: '', category: 'Events', url: '/assets/life/SAS00640.JPG' },
