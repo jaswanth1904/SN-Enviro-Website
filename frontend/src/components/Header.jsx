@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import logo from '/assets/logo.png';
 
 const CustomLink = ({ href, children, className, onClick, ...props }) => {
+    if (href?.startsWith('http')) {
+        return <a href={href} target="_blank" rel="noopener noreferrer" className={className} onClick={onClick} {...props}>{children}</a>;
+    }
     if (href?.startsWith('/#') || href?.startsWith('#')) {
         return <a href={href} className={className} onClick={onClick} {...props}>{children}</a>;
     }
@@ -186,7 +189,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                 }
             ]
         },
-        { name: 'Services', href: '/#services' },
+        { name: 'SNE Live Portal', href: 'https://snenviro.in/' },
         { name: 'Clients', href: '/#clients' },
         { name: 'About', href: '/#about' },
         { name: 'Life at SN Enviro', href: '/#life-at-sn' },
@@ -220,13 +223,13 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                 </CustomLink>
 
                 {/* Desktop Nav */}
-                <nav className="hidden lg:flex items-center gap-10">
-                    <ul className="flex items-center gap-8">
+                <nav className="hidden lg:flex items-center gap-6 xl:gap-10">
+                    <ul className="flex items-center gap-4 xl:gap-8">
                         {navLinks.map((link) => (
                             <li key={link.name} className="relative group" onMouseLeave={handleTopLeave} onMouseEnter={() => { if (leaveTimeout.current) clearTimeout(leaveTimeout.current); }}>
                                 <CustomLink
                                     href={link.href}
-                                    className={`text-sm font-bold uppercase tracking-widest no-underline transition-all hover:text-emerald-500 flex items-center gap-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                                    className={`whitespace-nowrap text-[10px] xl:text-sm font-bold uppercase tracking-wider xl:tracking-widest no-underline transition-all hover:text-emerald-500 flex items-center gap-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'
                                         }`}
                                 >
                                     {link.name}

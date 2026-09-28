@@ -135,9 +135,11 @@ const MapSection = ({ isDarkMode }) => {
                             <ChangeView center={activeLocation.coords} zoom={zoom} />
                             <TileLayer
                                 url={isDarkMode
-                                    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-                                    : 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'}
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                                    ? 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+                                    : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'}
+                                attribution={isDarkMode 
+                                    ? '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, FAO, NOAA, USGS, EPA' 
+                                    : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
                             />
 
                             {locations.map((loc) => (
