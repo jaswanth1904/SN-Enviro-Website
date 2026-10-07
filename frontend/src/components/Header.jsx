@@ -190,7 +190,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
             ]
         },
         { name: 'SNE Live Portal', href: 'https://snenviro.in/' },
-        { name: 'Clients', href: '/#clients' },
+        { name: 'Support Tickets', href: 'https://snenvirotickets.in' },
         { name: 'About', href: '/#about' },
         { name: 'Life at SN Enviro', href: '/#life-at-sn' },
         { name: 'Employee Portal', href: '/employee' },
