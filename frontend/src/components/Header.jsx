@@ -61,7 +61,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
     }, []);
 
     const navLinks = [
-        { name: 'Live Dashboard', href: '/dashboard' },
+        { name: 'Dashboard', href: '/dashboard' },
         {
             name: 'Products',
             href: '/#products',
@@ -189,10 +189,10 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                 }
             ]
         },
-        { name: 'SNE Live Portal', href: 'https://snenviro.in/' },
-        { name: 'Support Tickets', href: 'https://snenvirotickets.in' },
+        { name: 'SNE Live', href: 'https://snenviro.in/' },
+        { name: 'Tickets', href: 'https://snenvirotickets.in' },
         { name: 'Attendance', href: 'https://attendance.snenviro.org/' },
-        { name: 'Life at SN Enviro', href: '/#life-at-sn' },
+        { name: 'Life at SNE', href: '/#life-at-sn' },
         { name: 'Employee Portal', href: '/employee' },
     ];
 
