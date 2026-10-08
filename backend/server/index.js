@@ -9,6 +9,7 @@ import rateLimit from 'express-rate-limit';
 import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
 import morgan from 'morgan';
+import sanitizeHtml from 'sanitize-html';
 
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -67,7 +68,22 @@ app.use((req, res, next) => {
 });
 
 // Data Sanitization against XSS
-// app.use(xss()); // disabling due to Express 5 compatibility issues
+const sanitizeData = (data) => {
+    if (typeof data === 'string') return sanitizeHtml(data);
+    if (typeof data === 'object' && data !== null) {
+        Object.keys(data).forEach(key => {
+            data[key] = sanitizeData(data[key]);
+        });
+    }
+    return data;
+};
+
+app.use((req, res, next) => {
+    if (req.body) req.body = sanitizeData(req.body);
+    if (req.query) req.query = sanitizeData(req.query);
+    if (req.params) req.params = sanitizeData(req.params);
+    next();
+});
 
 // MongoDB Connection
 const MONGODB_URI = process.env.MONGO_URI;
@@ -101,7 +117,7 @@ app.get('/', (req, res) => {
 // Global Error Handler
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(500).json({ error: 'Internal Server Error', message: err.message });
 });
 
 if (process.env.NODE_ENV !== 'test') {

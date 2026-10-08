@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import './index.css';
 
@@ -25,6 +25,24 @@ const LoadingFallback = () => (
   </div>
 );
 
+// Inner component to track page views on route change
+function PageTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    fetch((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/visits', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pagePath: location.pathname + location.hash,
+        referrer: document.referrer || ''
+      })
+    }).catch(err => console.error('Error reporting visit:', err));
+  }, [location]);
+
+  return null;
+}
+
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isPortalOpen, setIsPortalOpen] = useState(false);
@@ -38,32 +56,14 @@ function App() {
     }
   }, [isDarkMode]);
 
-  // Track visitor session (once per browser tab session)
-  useEffect(() => {
-    const hasVisited = sessionStorage.getItem('visited');
-    if (!hasVisited) {
-      fetch((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/visits', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: window.location.pathname + window.location.hash,
-          referrer: document.referrer || ''
-        })
-      })
-      .then(res => {
-        if (res.ok) {
-          sessionStorage.setItem('visited', 'true');
-        }
-      })
-      .catch(err => console.error('Error reporting visit:', err));
-    }
-  }, []);
+
 
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   return (
     <ErrorBoundary>
       <Router>
+        <PageTracker />
         <div className={`flex flex-col min-h-screen w-full overflow-x-hidden transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 text-slate-200' : 'bg-white text-slate-900'}`}>
 
           <Suspense fallback={<LoadingFallback />}>
