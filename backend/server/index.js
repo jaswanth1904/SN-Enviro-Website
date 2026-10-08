@@ -104,6 +104,9 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server v2 is running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server v2 is running on port ${PORT}`);
+    });
+}
+export default app;

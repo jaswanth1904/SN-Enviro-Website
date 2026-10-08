@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "server": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
@@ -26,6 +27,9 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "cross-env": "^10.1.0",
+    "jest": "^30.5.2",
+    "nodemon": "^3.1.0",
+    "supertest": "^7.3.1"
   }
 }
