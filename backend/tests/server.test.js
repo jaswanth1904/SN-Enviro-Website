@@ -1,6 +1,7 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../server/index.js';
+import { describe, it, expect, afterAll } from 'vitest';
 
 describe('Server Basics', () => {
   // Close database connection after tests to prevent open handles from keeping Jest alive

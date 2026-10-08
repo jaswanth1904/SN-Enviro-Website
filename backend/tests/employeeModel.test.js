@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Employee from '../server/models/Employee.js';
+import { describe, it, expect } from 'vitest';
 
 describe('Employee Model (Unit Tests)', () => {
   it('should throw validation error if required fields are missing', async () => {

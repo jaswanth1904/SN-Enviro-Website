@@ -79,9 +79,9 @@ const sanitizeData = (data) => {
 };
 
 app.use((req, res, next) => {
-    if (req.body) req.body = sanitizeData(req.body);
-    if (req.query) req.query = sanitizeData(req.query);
-    if (req.params) req.params = sanitizeData(req.params);
+    if (req.body) sanitizeData(req.body);
+    if (req.query) sanitizeData(req.query);
+    if (req.params) sanitizeData(req.params);
     next();
 });
 
