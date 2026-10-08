@@ -351,7 +351,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
             {/* Mobile Menu Overlay */}
             <div className={`fixed inset-0 z-[200] lg:hidden transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={() => setMobileMenuOpen(false)}></div>
-                <div className={`absolute right-0 top-0 h-full w-4/5 max-w-sm p-8 shadow-2xl transition-transform duration-500 ${isDarkMode ? 'bg-slate-900' : 'bg-white'} ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className={`absolute right-0 top-0 h-full w-4/5 max-w-sm p-8 shadow-2xl transition-transform duration-500 overflow-y-auto ${isDarkMode ? 'bg-slate-900' : 'bg-white'} ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                     <div className="flex justify-between items-center mb-12">
                         <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Navigation</span>
                         <button onClick={() => setMobileMenuOpen(false)} className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full">
