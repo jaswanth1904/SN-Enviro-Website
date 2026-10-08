@@ -18,6 +18,11 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activeSubMenu, setActiveSubMenu] = useState(null);
     const [activeNestedMenu, setActiveNestedMenu] = useState(null);
+    const [mobileExpanded, setMobileExpanded] = useState({});
+    
+    const toggleMobileAccordion = (key) => {
+        setMobileExpanded(prev => ({ ...prev, [key]: !prev[key] }));
+    };
     
     // Timeout ref to handle forgiving dropdown close
     const leaveTimeout = React.useRef(null);
@@ -365,65 +370,83 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                                 {link.dropdown ? (
                                     <div className="flex flex-col gap-4">
                                         <button
-                                            className={`text-2xl font-bold flex justify-between items-center group ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
-                                            onClick={() => setMobileMenuOpen(true)} // Keep menu open to interact
+                                            className={`text-2xl font-bold w-full flex justify-between items-center group ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
+                                            onClick={() => toggleMobileAccordion(link.name)} 
                                         >
                                             {link.name}
+                                            <ChevronDown size={24} className={`transition-transform duration-300 ${mobileExpanded[link.name] ? 'rotate-180' : ''}`} />
                                         </button>
-                                        <div className="pl-4 border-l-2 border-emerald-500/30 flex flex-col gap-4">
-                                            {link.dropdown.map((subLink) => (
-                                                <div key={subLink.name}>
-                                                    {subLink.subItems ? (
-                                                        <div className="flex flex-col gap-3">
-                                                            <span className={`text-lg font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                                                                {subLink.name}
-                                                            </span>
-                                                            <div className="pl-4 flex flex-col gap-3">
-                                                                {subLink.subItems.map(nested => (
-                                                                    <div key={nested.name} className="flex flex-col gap-2">
-                                                                        {nested.nestedItems ? (
-                                                                            <>
-                                                                                <span className={`text-base font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                                                                                    {nested.name}
-                                                                                </span>
-                                                                                <div className="pl-4 flex flex-col gap-2">
-                                                                                    {nested.nestedItems.map(subNested => (
-                                                                                        <CustomLink
-                                                                                            key={subNested.name}
-                                                                                            href={subNested.href}
-                                                                                            onClick={() => setMobileMenuOpen(false)}
-                                                                                            className={`text-sm font-semibold no-underline transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'}`}
+                                        
+                                        {mobileExpanded[link.name] && (
+                                            <div className="pl-4 border-l-2 border-emerald-500/30 flex flex-col gap-4">
+                                                {link.dropdown.map((subLink) => (
+                                                    <div key={subLink.name}>
+                                                        {subLink.subItems ? (
+                                                            <div className="flex flex-col gap-3">
+                                                                <button 
+                                                                    onClick={() => toggleMobileAccordion(subLink.name)}
+                                                                    className={`text-lg font-bold w-full text-left flex justify-between items-center ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}
+                                                                >
+                                                                    {subLink.name}
+                                                                    <ChevronDown size={18} className={`transition-transform duration-300 ${mobileExpanded[subLink.name] ? 'rotate-180' : ''}`} />
+                                                                </button>
+                                                                
+                                                                {mobileExpanded[subLink.name] && (
+                                                                    <div className="pl-4 flex flex-col gap-3">
+                                                                        {subLink.subItems.map(nested => (
+                                                                            <div key={nested.name} className="flex flex-col gap-2">
+                                                                                {nested.nestedItems ? (
+                                                                                    <>
+                                                                                        <button 
+                                                                                            onClick={() => toggleMobileAccordion(nested.name)}
+                                                                                            className={`text-base font-bold w-full text-left flex justify-between items-center ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}
                                                                                         >
-                                                                                            {subNested.name}
-                                                                                        </CustomLink>
-                                                                                    ))}
-                                                                                </div>
-                                                                            </>
-                                                                        ) : (
-                                                                            <CustomLink
-                                                                                href={nested.href}
-                                                                                onClick={() => setMobileMenuOpen(false)}
-                                                                                className={`text-base font-medium no-underline transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'}`}
-                                                                            >
-                                                                                {nested.name}
-                                                                            </CustomLink>
-                                                                        )}
+                                                                                            {nested.name}
+                                                                                            <ChevronDown size={16} className={`transition-transform duration-300 ${mobileExpanded[nested.name] ? 'rotate-180' : ''}`} />
+                                                                                        </button>
+                                                                                        
+                                                                                        {mobileExpanded[nested.name] && (
+                                                                                            <div className="pl-4 flex flex-col gap-2">
+                                                                                                {nested.nestedItems.map(subNested => (
+                                                                                                    <CustomLink
+                                                                                                        key={subNested.name}
+                                                                                                        href={subNested.href}
+                                                                                                        onClick={() => setMobileMenuOpen(false)}
+                                                                                                        className={`text-sm font-semibold no-underline transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'}`}
+                                                                                                    >
+                                                                                                        {subNested.name}
+                                                                                                    </CustomLink>
+                                                                                                ))}
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </>
+                                                                                ) : (
+                                                                                    <CustomLink
+                                                                                        href={nested.href}
+                                                                                        onClick={() => setMobileMenuOpen(false)}
+                                                                                        className={`text-base font-medium no-underline transition-colors ${isDarkMode ? 'text-slate-400 hover:text-emerald-500' : 'text-slate-600 hover:text-emerald-600'}`}
+                                                                                    >
+                                                                                        {nested.name}
+                                                                                    </CustomLink>
+                                                                                )}
+                                                                            </div>
+                                                                        ))}
                                                                     </div>
-                                                                ))}
+                                                                )}
                                                             </div>
-                                                        </div>
-                                                    ) : (
-                                                        <CustomLink
-                                                            href={subLink.href}
-                                                            onClick={() => setMobileMenuOpen(false)}
-                                                            className={`text-lg font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}
-                                                        >
-                                                            {subLink.name}
-                                                        </CustomLink>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </div>
+                                                        ) : (
+                                                            <CustomLink
+                                                                href={subLink.href}
+                                                                onClick={() => setMobileMenuOpen(false)}
+                                                                className={`text-lg font-bold no-underline ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}
+                                                            >
+                                                                {subLink.name}
+                                                            </CustomLink>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <CustomLink
