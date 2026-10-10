@@ -23,8 +23,8 @@ const Clients = ({ isDarkMode }) => {
         setClients(defaultClients);
 
         setTestimonials([
-            { name: "John Doe", role: "Plant Manager", content: "SN Enviro's CEMS solutions transformed our compliance workflow. Highly recommended." },
-            { name: "Sarah Smith", role: "Environmental Officer", content: "The CAAQMS installation was seamless, and the data accuracy is outstanding." }
+            { content: "SN Enviro's CEMS solutions transformed our compliance workflow. Highly recommended." },
+            { content: "The CAAQMS installation was seamless, and the data accuracy is outstanding." }
         ]);
     }, []);
 
@@ -81,19 +81,21 @@ const Clients = ({ isDarkMode }) => {
                             <p className={`text-lg italic leading-relaxed mb-8 relative z-10 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                                 "{t.content}"
                             </p>
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold overflow-hidden">
-                                    {t.avatarUrl ? (
-                                        <img src={t.avatarUrl?.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${t.avatarUrl}` : t.avatarUrl} alt={t.name} className="w-full h-full object-cover" />
-                                    ) : (
-                                        t.name[0]
-                                    )}
+                            {t.name && (
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold overflow-hidden">
+                                        {t.avatarUrl ? (
+                                            <img src={t.avatarUrl?.startsWith('uploads/') ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${t.avatarUrl}` : t.avatarUrl} alt={t.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            t.name[0]
+                                        )}
+                                    </div>
+                                    <div>
+                                        <h5 className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{t.name}</h5>
+                                        <p className="text-xs text-emerald-500 font-bold uppercase tracking-wider">{t.role}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h5 className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{t.name}</h5>
-                                    <p className="text-xs text-emerald-500 font-bold uppercase tracking-wider">{t.role}</p>
-                                </div>
-                            </div>
+                            )}
                         </motion.div>
                     ))}
                 </div>

@@ -45,8 +45,9 @@ const Footer = ({ isDarkMode }) => {
                     {/* Brand Section */}
                     <motion.div variants={itemVariants} className="space-y-4">
                         <div className="flex flex-col drop-shadow-xl">
-                            <h2 className="text-3xl font-black tracking-tighter leading-none text-white">SN ENVIRO</h2>
-                            <span className="text-emerald-400 text-xs font-bold uppercase tracking-[0.3em] mt-1">Solutions Pvt. Ltd.</span>
+                            <h2 className="text-3xl font-black tracking-tighter leading-none text-white">SN ENVIRO GROUP</h2>
+                            <span className="text-emerald-400 text-xs font-bold uppercase tracking-[0.3em] mt-1">SN Enviro India</span>
+                            <span className="text-emerald-400 text-xs font-bold uppercase tracking-[0.3em] mt-1">SN Enviro India Pvt. Ltd.</span>
                         </div>
                         <p className="text-slate-100 font-medium text-sm leading-relaxed max-w-xs drop-shadow-md">
                             Pioneering environmental intelligence through advanced monitoring systems and nationwide engineering expertise since 2017.
