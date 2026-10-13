@@ -53,8 +53,19 @@ const Footer = ({ isDarkMode }) => {
                             Pioneering environmental intelligence through advanced monitoring systems and nationwide engineering expertise since 2017.
                         </p>
                         <div className="flex gap-4">
-                            {[Facebook, Linkedin, Twitter].map((Icon, i) => (
-                                <a key={i} href="#" className="w-10 h-10 rounded-full bg-slate-900/80 text-slate-200 border border-slate-700 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-lg backdrop-blur-sm">
+                            {[
+                                { name: 'Facebook', Icon: Facebook, href: 'https://www.facebook.com/snenvirosolutions/' },
+                                { name: 'LinkedIn', Icon: Linkedin, href: 'https://www.linkedin.com/in/sn-enviro-india-pvt-ltd-6a2293443' },
+                                { name: 'Twitter', Icon: Twitter, href: '#' }
+                            ].map(({ name, Icon, href }) => (
+                                <a
+                                    key={name}
+                                    href={href}
+                                    target={href !== '#' ? '_blank' : undefined}
+                                    rel={href !== '#' ? 'noopener noreferrer' : undefined}
+                                    aria-label={name}
+                                    className="w-10 h-10 rounded-full bg-slate-900/80 text-slate-200 border border-slate-700 flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-lg backdrop-blur-sm"
+                                >
                                     <Icon size={18} />
                                 </a>
                             ))}
