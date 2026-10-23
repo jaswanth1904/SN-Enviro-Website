@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, CheckCircle, XCircle, Activity, Info, FileText, Settings, Layers, Zap, Wrench, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeft, CheckCircle, XCircle, Activity, Info, FileText, Settings, Layers, Zap, Wrench, HelpCircle, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
 
 const productSubTabsConfig = {
     // CAAQMS
@@ -204,6 +204,8 @@ const ProductDetails = ({ isDarkMode }) => {
     const [activeTab, setActiveTab] = useState('overview');
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
     const [activeSubTab, setActiveSubTab] = useState('system');
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
     const tabs = [
         { id: 'overview', label: 'Overview', icon: FileText },
@@ -258,7 +260,27 @@ const ProductDetails = ({ isDarkMode }) => {
                 { label: "Calibration", value: "Built-in Dynamic Gas Dilution System" }
             ],
             compliance: "US EPA Designated Reference Methods, EU Directive 2008/50/EC.",
-            imageUrl: "/assets/CAAQMS.png",
+            imageUrl: "/assets/caaqms_diagram.jpg",
+            galleryImages: [
+                {
+                    url: "/assets/caaqms_diagram.jpg",
+                    label: "Architecture Diagram",
+                    title: "CAAQMS System Architecture & Data Flow",
+                    caption: "Continuous Ambient Air Quality Monitoring Station (CAAQMS) schematic with SO2, NOx, CO, PM10, PM2.5 reference analyzers, desktop PC, ethernet switch, and secure transmission to CPCB & SPCB servers."
+                },
+                {
+                    url: "/assets/caaqms_new.jpg",
+                    label: "Station Analyzer Racks",
+                    title: "Dual 19-Inch Analyzer Rack Hardware",
+                    caption: "Dual 19-inch rack shelter integration housing particulate monitors, gas analyzers, sampling lines, and automatic calibrators."
+                },
+                {
+                    url: "/assets/CAAQMS.png",
+                    label: "Network & Telemetry",
+                    title: "Telemetry & Multi-Point Calibration",
+                    caption: "Direct digital RS232 and Ethernet telemetry interfacing client monitoring with regulatory servers."
+                }
+            ],
             features: ["Multi-gas analysis (SO2, NOx, CO, O3)", "PM-10 and PM-2.5 monitoring", "Meteorological sensors integration", "Real-time data logging and display"],
             pros: ["High precision sensors for accurate readings", "Comprehensive monitoring of multiple pollutants", "Remote monitoring capabilities via internet"],
             cons: ["Requires regular maintenance and calibration"]
@@ -530,6 +552,8 @@ const ProductDetails = ({ isDarkMode }) => {
         } else {
             setError('Product not found');
         }
+        setCurrentImageIndex(0);
+        setIsLightboxOpen(false);
         setLoading(false);
     }, [id]);
 
@@ -574,62 +598,181 @@ const ProductDetails = ({ isDarkMode }) => {
     );
 
     return (
-        <div className={`pt-24 min-h-screen relative overflow-hidden ${isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}`}>
-            <div className="container mx-auto px-6 py-12 relative z-10">
-                <Link to="/#products" className="inline-flex items-center gap-2 text-emerald-500 font-bold mb-8 hover:opacity-80 transition-opacity">
-                    <ArrowLeft size={20} /> Back to Products
+        <div className={`pt-20 sm:pt-24 min-h-screen relative overflow-hidden ${isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}`}>
+            <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-12 relative z-10">
+                <Link to="/#products" className="inline-flex items-center gap-2 text-emerald-500 font-bold text-sm sm:text-base mb-6 sm:mb-8 hover:opacity-80 transition-opacity">
+                    <ArrowLeft size={18} /> Back to Products
                 </Link>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
-                    {/* Image Section */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className={`rounded-3xl p-8 flex items-center justify-center ${isDarkMode ? 'bg-slate-800' : 'bg-white shadow-xl'}`}
-                    >
-                        <img
-                            src={(product.imageUrl && product.imageUrl.startsWith('uploads/')) ? `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${product.imageUrl}` : (product.imageUrl || product.image || "/assets/logo.png")}
-                            alt={product.title}
-                            className="max-w-full max-h-[500px] object-contain"
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = 'https://via.placeholder.com/600?text=Product+Image';
-                            }}
-                        />
-                    </motion.div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start mb-12 sm:mb-16">
+                    {/* Interactive Product Gallery Section */}
+                    {(() => {
+                        const gallery = (product.galleryImages && product.galleryImages.length > 0)
+                            ? product.galleryImages
+                            : [{
+                                url: (product.imageUrl && product.imageUrl.startsWith('uploads/'))
+                                    ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/${product.imageUrl}`
+                                    : (product.imageUrl || product.image || "/assets/logo.png"),
+                                label: "Product Overview",
+                                title: product.title,
+                                caption: product.desc
+                            }];
+
+                        const activeImage = gallery[currentImageIndex] || gallery[0];
+                        const activeImageUrl = activeImage.url;
+                        const activeImageTitle = activeImage.title;
+                        const activeImageLabel = activeImage.label;
+                        const activeImageCaption = activeImage.caption;
+
+                        return (
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className={`rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex flex-col ${isDarkMode ? 'bg-slate-800/90 border border-slate-700/80' : 'bg-white shadow-lg sm:shadow-xl border border-slate-100'}`}
+                            >
+                                {/* Main Image Preview Container */}
+                                <div className="relative w-full h-[260px] sm:h-[400px] rounded-xl sm:rounded-2xl overflow-hidden flex items-center justify-center p-3 sm:p-6 bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-700/60 group">
+                                    <img
+                                        src={activeImageUrl}
+                                        alt={activeImageTitle || product.title}
+                                        className="max-w-full max-h-full object-contain cursor-pointer transition-transform duration-500 group-hover:scale-[1.02]"
+                                        onClick={() => setIsLightboxOpen(true)}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = 'https://via.placeholder.com/600?text=Product+Image';
+                                        }}
+                                    />
+
+                                    {/* Top Badges */}
+                                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-2 z-10">
+                                        {gallery.length > 1 && (
+                                            <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-black/60 backdrop-blur-md text-white shadow-sm">
+                                                {currentImageIndex + 1} / {gallery.length}
+                                            </span>
+                                        )}
+                                        <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-emerald-500/90 text-white backdrop-blur-md shadow-sm">
+                                            {activeImageLabel || product.category}
+                                        </span>
+                                    </div>
+
+                                    {/* Zoom Button */}
+                                    <button
+                                        onClick={() => setIsLightboxOpen(true)}
+                                        className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 sm:p-2.5 rounded-full bg-black/60 hover:bg-emerald-500 text-white backdrop-blur-md transition-all duration-300 shadow-md hover:scale-110 active:scale-95"
+                                        title="Tap to zoom / view fullscreen"
+                                        aria-label="Zoom image"
+                                    >
+                                        <Maximize2 size={16} />
+                                    </button>
+
+                                    {/* Prev / Next Buttons on Main Image */}
+                                    {gallery.length > 1 && (
+                                        <>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+                                                }}
+                                                className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white flex items-center justify-center shadow-lg transition-all hover:bg-emerald-500 hover:text-white hover:border-emerald-500 active:scale-95"
+                                                aria-label="Previous image"
+                                            >
+                                                <ChevronLeft size={20} />
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setCurrentImageIndex((prev) => (prev + 1) % gallery.length);
+                                                }}
+                                                className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white flex items-center justify-center shadow-lg transition-all hover:bg-emerald-500 hover:text-white hover:border-emerald-500 active:scale-95"
+                                                aria-label="Next image"
+                                            >
+                                                <ChevronRight size={20} />
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
+
+                                {/* Active Image Caption */}
+                                {activeImageTitle && (
+                                    <div className="mt-3 px-1">
+                                        <h4 className={`text-xs sm:text-sm font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>
+                                            {activeImageTitle}
+                                        </h4>
+                                        {activeImageCaption && (
+                                            <p className={`text-[11px] sm:text-xs mt-0.5 line-clamp-2 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                                                {activeImageCaption}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* Interactive Thumbnail Strip for Easy Mobile Switching */}
+                                {gallery.length > 1 && (
+                                    <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60">
+                                        <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider block mb-2 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                                            Tap to Switch Picture ({gallery.length}):
+                                        </span>
+                                        <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-1 no-scrollbar">
+                                            {gallery.map((img, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => setCurrentImageIndex(idx)}
+                                                    className={`group/thumb flex items-center gap-2 p-1.5 sm:p-2 rounded-xl border text-left transition-all shrink-0 ${
+                                                        currentImageIndex === idx
+                                                            ? 'border-emerald-500 bg-emerald-500/10 ring-2 ring-emerald-500/30'
+                                                            : 'border-slate-200 dark:border-slate-700 hover:border-emerald-500/40 bg-white dark:bg-slate-900/40'
+                                                    }`}
+                                                >
+                                                    <img
+                                                        src={img.url}
+                                                        alt={img.label || img.title}
+                                                        className="w-12 h-10 sm:w-14 sm:h-11 object-contain rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700"
+                                                    />
+                                                    <div className="pr-1">
+                                                        <span className={`text-[11px] sm:text-xs font-bold block ${currentImageIndex === idx ? 'text-emerald-500' : (isDarkMode ? 'text-slate-300' : 'text-slate-700')}`}>
+                                                            {img.label || `Photo ${idx + 1}`}
+                                                        </span>
+                                                        <span className="text-[9px] text-slate-400 block">Tap to view</span>
+                                                    </div>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </motion.div>
+                        );
+                    })()}
 
                     {/* Content Section */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                     >
-                        <span className="text-emerald-500 font-bold uppercase tracking-widest text-sm mb-2 block">
+                        <span className="text-emerald-500 font-bold uppercase tracking-wider text-xs sm:text-sm mb-2 block">
                             {product.category}
                         </span>
-                        <h1 className="text-4xl lg:text-5xl font-black mb-6 leading-tight">
+                        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black mb-4 sm:mb-6 leading-tight break-words">
                             {product.title}
                         </h1>
 
-                        <div className={`prose max-w-none mb-10 ${isDarkMode ? 'prose-invert' : ''}`}>
-                            <p className={`text-lg italic font-medium mb-6 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                        <div className={`prose max-w-none mb-6 sm:mb-10 ${isDarkMode ? 'prose-invert' : ''}`}>
+                            <p className={`text-base sm:text-lg italic font-medium mb-4 sm:mb-6 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                                 {product.desc}
                             </p>
-                            <p className={`text-base leading-relaxed mb-6 ${isDarkMode ? 'text-slate-400' : 'text-slate-700'}`}>
+                            <p className={`text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 ${isDarkMode ? 'text-slate-400' : 'text-slate-700'}`}>
                                 {product.details}
                             </p>
                         </div>
 
-
-
                         {/* Features List */}
                         {product.features && product.features.length > 0 && (
                             <div className="mb-8">
-                                <h3 className={`text-xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Key Features</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <h3 className={`text-lg sm:text-xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Key Features</h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                     {product.features.map((feature, index) => (
-                                        <div key={index} className={`p-4 rounded-xl flex items-start gap-3 ${isDarkMode ? 'bg-slate-800' : 'bg-white shadow-sm border border-slate-100'}`}>
-                                            <Activity className="text-emerald-500 shrink-0" size={20} />
-                                            <span className={`text-sm ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{feature}</span>
+                                        <div key={index} className={`p-3.5 sm:p-4 rounded-xl flex items-start gap-3 ${isDarkMode ? 'bg-slate-800' : 'bg-white shadow-sm border border-slate-100'}`}>
+                                            <Activity className="text-emerald-500 shrink-0" size={18} />
+                                            <span className={`text-xs sm:text-sm ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{feature}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -639,31 +782,31 @@ const ProductDetails = ({ isDarkMode }) => {
                 </div>
 
                 {/* EXTENDED DETAILS SECTION - Interactive Tabs */}
-                <div className="mt-16 bg-slate-50 dark:bg-slate-800/30 py-16 rounded-[3rem] border border-slate-100 dark:border-slate-800">
-                    <div className="px-6 lg:px-16">
-                        <h2 className={`text-3xl font-black mb-12 text-center uppercase tracking-widest ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                <div className="mt-10 sm:mt-16 bg-slate-50/80 dark:bg-slate-800/30 py-8 sm:py-16 rounded-2xl sm:rounded-[3rem] border border-slate-100 dark:border-slate-800">
+                    <div className="px-3 sm:px-6 lg:px-16">
+                        <h2 className={`text-xl sm:text-3xl font-black mb-6 sm:mb-12 text-center uppercase tracking-wide sm:tracking-widest ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                             Comprehensive <span className="text-emerald-500">Overview</span>
                         </h2>
 
                         {/* Tab Navigation */}
-                        <div className="flex flex-wrap justify-center gap-4 mb-12">
+                        <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2 sm:gap-4 mb-6 sm:mb-12">
                             {tabs.map(tab => (
                                 <button
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id)}
-                                    className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold transition-all duration-300 ${activeTab === tab.id
-                                            ? 'bg-emerald-500 text-white shadow-xl shadow-emerald-500/30 -translate-y-1'
+                                    className={`flex items-center justify-center gap-2 sm:gap-3 px-3 py-3 sm:px-6 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-base transition-all duration-300 ${activeTab === tab.id
+                                            ? 'bg-emerald-500 text-white shadow-lg sm:shadow-xl shadow-emerald-500/30 -translate-y-0.5 sm:-translate-y-1'
                                             : `${isDarkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-white text-slate-600 hover:bg-slate-100'} hover:shadow-md border border-slate-200 dark:border-slate-700`
                                         }`}
                                 >
-                                    <tab.icon size={20} />
-                                    {tab.label}
+                                    <tab.icon size={18} className="shrink-0" />
+                                    <span className="truncate">{tab.label}</span>
                                 </button>
                             ))}
                         </div>
 
                         {/* Tab Content */}
-                        <div className={`relative min-h-[400px] rounded-[2rem] p-8 md:p-12 shadow-2xl transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 border border-slate-800 shadow-none' : 'bg-white border border-slate-100'}`}>
+                        <div className={`relative min-h-[350px] rounded-2xl sm:rounded-[2rem] p-4 sm:p-8 md:p-12 shadow-lg sm:shadow-2xl transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 border border-slate-800 shadow-none' : 'bg-white border border-slate-100'}`}>
                             <AnimatePresence mode="wait">
                                 {activeTab === 'overview' && (
                                     <motion.div
@@ -672,27 +815,27 @@ const ProductDetails = ({ isDarkMode }) => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
                                         transition={{ duration: 0.3 }}
-                                        className="space-y-12"
+                                        className="space-y-8 sm:space-y-12"
                                     >
                                         {product.longDescription && (
                                             <div>
-                                                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                    <Info className="text-emerald-500" /> Detailed Description
+                                                <h3 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2.5 sm:gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                    <Info className="text-emerald-500 shrink-0" size={22} /> Detailed Description
                                                 </h3>
                                                 <div className={`prose max-w-none ${isDarkMode ? 'prose-invert text-slate-400' : 'text-slate-600'}`}>
                                                     {product.longDescription.split('\n\n').map((paragraph, idx) => (
-                                                        <p key={idx} className="mb-4 leading-relaxed text-lg font-medium">{paragraph}</p>
+                                                        <p key={idx} className="mb-4 leading-relaxed text-sm sm:text-lg font-normal sm:font-medium">{paragraph}</p>
                                                     ))}
                                                 </div>
                                             </div>
                                         )}
                                         {product.operatingPrinciple && (
                                             <div>
-                                                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                    <Zap className="text-emerald-500" /> Operating Principle
+                                                <h3 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2.5 sm:gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                    <Zap className="text-emerald-500 shrink-0" size={22} /> Operating Principle
                                                 </h3>
-                                                <div className={`p-6 md:p-8 rounded-2xl ${isDarkMode ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
-                                                    <p className={`text-lg leading-relaxed font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                                                <div className={`p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl ${isDarkMode ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
+                                                    <p className={`text-sm sm:text-lg leading-relaxed font-normal sm:font-medium whitespace-pre-line ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                                                         {product.operatingPrinciple}
                                                     </p>
                                                 </div>
@@ -708,18 +851,18 @@ const ProductDetails = ({ isDarkMode }) => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
                                         transition={{ duration: 0.3 }}
-                                        className="space-y-12"
+                                        className="space-y-8 sm:space-y-12"
                                     >
                                         {product.technicalSpecs && product.technicalSpecs.length > 0 && (
                                             <div>
-                                                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                    <Settings className="text-emerald-500" /> Technical Specifications
+                                                <h3 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2.5 sm:gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                    <Settings className="text-emerald-500 shrink-0" size={22} /> Technical Specifications
                                                 </h3>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                                                     {product.technicalSpecs.map((spec, idx) => (
-                                                        <div key={idx} className={`flex flex-col p-5 rounded-2xl border transition-all hover:shadow-md ${isDarkMode ? 'bg-slate-800/50 border-slate-700 hover:bg-slate-800' : 'bg-white border-slate-100 hover:border-emerald-500/30'}`}>
-                                                            <span className={`text-xs font-bold uppercase tracking-wider mb-2 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>{spec.label}</span>
-                                                            <span className={`text-lg font-semibold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>{spec.value}</span>
+                                                        <div key={idx} className={`flex flex-col p-4 sm:p-5 rounded-xl sm:rounded-2xl border transition-all hover:shadow-md ${isDarkMode ? 'bg-slate-800/50 border-slate-700 hover:bg-slate-800' : 'bg-white border-slate-100 hover:border-emerald-500/30'}`}>
+                                                            <span className={`text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1 sm:mb-2 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`}>{spec.label}</span>
+                                                            <span className={`text-base sm:text-lg font-semibold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>{spec.value}</span>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -727,12 +870,12 @@ const ProductDetails = ({ isDarkMode }) => {
                                         )}
                                         {product.compliance && (
                                             <div>
-                                                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                    <CheckCircle className="text-emerald-500" /> Regulatory Compliance
+                                                <h3 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2.5 sm:gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                    <CheckCircle className="text-emerald-500 shrink-0" size={22} /> Regulatory Compliance
                                                 </h3>
-                                                <div className={`flex items-start gap-4 p-6 rounded-2xl border border-emerald-500/20 ${isDarkMode ? 'bg-emerald-500/5' : 'bg-emerald-50'}`}>
-                                                    <CheckCircle className="text-emerald-500 shrink-0 mt-1" size={24} />
-                                                    <p className={`text-lg font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{product.compliance}</p>
+                                                <div className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-emerald-500/20 ${isDarkMode ? 'bg-emerald-500/5' : 'bg-emerald-50'}`}>
+                                                    <CheckCircle className="text-emerald-500 shrink-0 mt-0.5 sm:mt-1" size={22} />
+                                                    <p className={`text-sm sm:text-lg font-normal sm:font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{product.compliance}</p>
                                                 </div>
                                             </div>
                                         )}
@@ -746,20 +889,20 @@ const ProductDetails = ({ isDarkMode }) => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
                                         transition={{ duration: 0.3 }}
-                                        className="space-y-12"
+                                        className="space-y-8 sm:space-y-12"
                                     >
                                         {product.applications && product.applications.length > 0 && (
                                             <div>
-                                                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                    <Layers className="text-emerald-500" /> Applications & Use Cases
+                                                <h3 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2.5 sm:gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                    <Layers className="text-emerald-500 shrink-0" size={22} /> Applications & Use Cases
                                                 </h3>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                                                     {product.applications.map((app, idx) => (
-                                                        <div key={idx} className={`flex items-center gap-4 p-5 rounded-2xl border transition-all hover:translate-x-2 ${isDarkMode ? 'bg-slate-800/50 border-slate-700 hover:bg-slate-800' : 'bg-white border-slate-100 hover:border-emerald-500/30 hover:shadow-md'}`}>
-                                                            <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
-                                                                <CheckCircle size={20} className="text-emerald-500" />
+                                                        <div key={idx} className={`flex items-center gap-3 sm:gap-4 p-3.5 sm:p-5 rounded-xl sm:rounded-2xl border transition-all hover:translate-x-1 sm:hover:translate-x-2 ${isDarkMode ? 'bg-slate-800/50 border-slate-700 hover:bg-slate-800' : 'bg-white border-slate-100 hover:border-emerald-500/30 hover:shadow-md'}`}>
+                                                            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
+                                                                <CheckCircle size={18} className="text-emerald-500" />
                                                             </div>
-                                                            <span className={`text-lg font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{app}</span>
+                                                            <span className={`text-sm sm:text-lg font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{app}</span>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -767,11 +910,11 @@ const ProductDetails = ({ isDarkMode }) => {
                                         )}
                                         {product.installation && (
                                             <div>
-                                                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                    <Wrench className="text-emerald-500" /> Installation & Commissioning
+                                                <h3 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2.5 sm:gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                    <Wrench className="text-emerald-500 shrink-0" size={22} /> Installation & Commissioning
                                                 </h3>
-                                                <div className={`p-6 md:p-8 rounded-2xl ${isDarkMode ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
-                                                    <p className={`text-lg leading-relaxed font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                                                <div className={`p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl ${isDarkMode ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
+                                                    <p className={`text-sm sm:text-lg leading-relaxed font-normal sm:font-medium whitespace-pre-line ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                                                         {product.installation}
                                                     </p>
                                                 </div>
@@ -787,21 +930,21 @@ const ProductDetails = ({ isDarkMode }) => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
                                         transition={{ duration: 0.3 }}
-                                        className="space-y-12"
+                                        className="space-y-8 sm:space-y-12"
                                     >
                                         {/* Pros & Cons */}
                                         {((product.pros && product.pros.length > 0) || (product.cons && product.cons.length > 0)) && (
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
                                                 {product.pros && product.pros.length > 0 && (
-                                                    <div className={`p-6 md:p-8 rounded-3xl border border-emerald-500/20 ${isDarkMode ? 'bg-emerald-500/5' : 'bg-emerald-50'}`}>
-                                                        <h3 className="text-emerald-500 font-bold text-xl mb-6 flex items-center gap-2">
-                                                            <CheckCircle size={24} /> Advantages
+                                                    <div className={`p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-emerald-500/20 ${isDarkMode ? 'bg-emerald-500/5' : 'bg-emerald-50'}`}>
+                                                        <h3 className="text-emerald-500 font-bold text-lg sm:text-xl mb-4 sm:mb-6 flex items-center gap-2">
+                                                            <CheckCircle size={20} /> Advantages
                                                         </h3>
-                                                        <ul className="space-y-4">
+                                                        <ul className="space-y-3 sm:space-y-4">
                                                             {product.pros.map((pro, index) => (
-                                                                <li key={index} className="flex items-start gap-3">
-                                                                    <CheckCircle size={20} className="text-emerald-500 mt-1 shrink-0" />
-                                                                    <span className={`font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{pro}</span>
+                                                                <li key={index} className="flex items-start gap-2.5 sm:gap-3">
+                                                                    <CheckCircle size={18} className="text-emerald-500 mt-0.5 shrink-0" />
+                                                                    <span className={`text-sm sm:text-base font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{pro}</span>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -809,15 +952,15 @@ const ProductDetails = ({ isDarkMode }) => {
                                                 )}
 
                                                 {product.cons && product.cons.length > 0 && (
-                                                    <div className={`p-6 md:p-8 rounded-3xl border border-slate-500/20 ${isDarkMode ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
-                                                        <h3 className="text-slate-500 font-bold text-xl mb-6 flex items-center gap-2">
-                                                            <XCircle size={24} /> Considerations
+                                                    <div className={`p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-slate-500/20 ${isDarkMode ? 'bg-slate-800/50' : 'bg-slate-50'}`}>
+                                                        <h3 className="text-slate-500 font-bold text-lg sm:text-xl mb-4 sm:mb-6 flex items-center gap-2">
+                                                            <XCircle size={20} /> Considerations
                                                         </h3>
-                                                        <ul className="space-y-4">
+                                                        <ul className="space-y-3 sm:space-y-4">
                                                             {product.cons.map((con, index) => (
-                                                                <li key={index} className="flex items-start gap-3">
-                                                                    <XCircle size={20} className="text-slate-400 mt-1 shrink-0" />
-                                                                    <span className={`font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{con}</span>
+                                                                <li key={index} className="flex items-start gap-2.5 sm:gap-3">
+                                                                    <XCircle size={18} className="text-slate-400 mt-0.5 shrink-0" />
+                                                                    <span className={`text-sm sm:text-base font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{con}</span>
                                                                 </li>
                                                             ))}
                                                         </ul>
@@ -829,21 +972,21 @@ const ProductDetails = ({ isDarkMode }) => {
                                         {/* FAQs Accordion */}
                                         {product.faqs && product.faqs.length > 0 && (
                                             <div>
-                                                <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                                                    <HelpCircle className="text-emerald-500" /> Frequently Asked Questions
+                                                <h3 className={`text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2.5 sm:gap-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                                                    <HelpCircle className="text-emerald-500 shrink-0" size={22} /> Frequently Asked Questions
                                                 </h3>
-                                                <div className="space-y-4">
+                                                <div className="space-y-3 sm:space-y-4">
                                                     {product.faqs.map((faq, idx) => (
                                                         <div
                                                             key={idx}
-                                                            className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'border-slate-700 bg-slate-800/30' : 'border-slate-200 bg-white'}`}
+                                                            className={`border rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 ${isDarkMode ? 'border-slate-700 bg-slate-800/30' : 'border-slate-200 bg-white'}`}
                                                         >
                                                             <button
                                                                 onClick={() => setOpenFaqIndex(openFaqIndex === idx ? null : idx)}
-                                                                className={`w-full flex items-center justify-between p-6 text-left transition-colors ${openFaqIndex === idx ? (isDarkMode ? 'bg-slate-800' : 'bg-slate-50') : 'hover:bg-slate-50 dark:hover:bg-slate-800'}`}
+                                                                className={`w-full flex items-center justify-between p-4 sm:p-6 text-left transition-colors ${openFaqIndex === idx ? (isDarkMode ? 'bg-slate-800' : 'bg-slate-50') : 'hover:bg-slate-50 dark:hover:bg-slate-800'}`}
                                                             >
-                                                                <span className={`text-lg font-semibold pr-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{faq.question}</span>
-                                                                <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 ${openFaqIndex === idx ? 'bg-emerald-500 text-white rotate-180' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}`}>
+                                                                <span className={`text-sm sm:text-lg font-semibold pr-3 sm:pr-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{faq.question}</span>
+                                                                <div className={`shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-transform duration-300 ${openFaqIndex === idx ? 'bg-emerald-500 text-white rotate-180' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}`}>
                                                                     <ChevronDown size={16} />
                                                                 </div>
                                                             </button>
@@ -855,8 +998,8 @@ const ProductDetails = ({ isDarkMode }) => {
                                                                         exit={{ height: 0, opacity: 0 }}
                                                                         transition={{ duration: 0.3 }}
                                                                     >
-                                                                        <div className={`p-6 pt-0 border-t ${isDarkMode ? 'border-slate-700 bg-slate-800' : 'border-slate-100 bg-slate-50'}`}>
-                                                                            <p className={`text-lg font-medium leading-relaxed mt-4 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{faq.answer}</p>
+                                                                        <div className={`p-4 sm:p-6 pt-0 border-t ${isDarkMode ? 'border-slate-700 bg-slate-800' : 'border-slate-100 bg-slate-50'}`}>
+                                                                            <p className={`text-sm sm:text-lg font-normal sm:font-medium leading-relaxed mt-3 sm:mt-4 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{faq.answer}</p>
                                                                         </div>
                                                                     </motion.div>
                                                                 )}
@@ -873,6 +1016,106 @@ const ProductDetails = ({ isDarkMode }) => {
                     </div>
                 </div>
             </div>
+
+            {/* Fullscreen Interactive Lightbox Modal */}
+            <AnimatePresence>
+                {isLightboxOpen && product && (() => {
+                    const gallery = (product.galleryImages && product.galleryImages.length > 0)
+                        ? product.galleryImages
+                        : [{
+                            url: (product.imageUrl && product.imageUrl.startsWith('uploads/'))
+                                ? `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/${product.imageUrl}`
+                                : (product.imageUrl || product.image || "/assets/logo.png"),
+                            label: "Product Overview",
+                            title: product.title,
+                            caption: product.desc
+                        }];
+                    const activeImage = gallery[currentImageIndex] || gallery[0];
+
+                    return (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[300] bg-black/95 backdrop-blur-xl flex items-center justify-center p-3 sm:p-8"
+                            onClick={() => setIsLightboxOpen(false)}
+                        >
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setIsLightboxOpen(false)}
+                                className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-20"
+                                aria-label="Close"
+                                title="Close (Esc)"
+                            >
+                                <X size={24} />
+                            </button>
+
+                            {/* Top Badges */}
+                            <div className="absolute top-4 left-4 sm:top-6 sm:left-6 flex items-center gap-3 z-20">
+                                {gallery.length > 1 && (
+                                    <span className="px-3.5 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold backdrop-blur-sm">
+                                        {currentImageIndex + 1} / {gallery.length}
+                                    </span>
+                                )}
+                                <span className="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+                                    {activeImage.label || product.title}
+                                </span>
+                            </div>
+
+                            {/* Next / Prev Buttons */}
+                            {gallery.length > 1 && (
+                                <>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+                                        }}
+                                        className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-white/10 hover:bg-emerald-500 text-white transition-all z-20 hover:scale-110 active:scale-95 shadow-xl"
+                                        aria-label="Previous image"
+                                    >
+                                        <ChevronLeft size={28} />
+                                    </button>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setCurrentImageIndex((prev) => (prev + 1) % gallery.length);
+                                        }}
+                                        className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 p-3 sm:p-4 rounded-full bg-white/10 hover:bg-emerald-500 text-white transition-all z-20 hover:scale-110 active:scale-95 shadow-xl"
+                                        aria-label="Next image"
+                                    >
+                                        <ChevronRight size={28} />
+                                    </button>
+                                </>
+                            )}
+
+                            {/* Modal Image Box */}
+                            <motion.div
+                                initial={{ scale: 0.92, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.92, opacity: 0 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="max-w-5xl w-full max-h-[85vh] flex flex-col items-center justify-center p-2"
+                            >
+                                <img
+                                    src={activeImage.url}
+                                    alt={activeImage.title || product.title}
+                                    className="max-w-full max-h-[70vh] object-contain rounded-xl shadow-2xl mb-4 bg-white/5 p-2 border border-white/10"
+                                />
+                                <div className="text-center text-white max-w-2xl px-4">
+                                    <h4 className="text-base sm:text-xl font-bold mb-1">
+                                        {activeImage.title || product.title}
+                                    </h4>
+                                    {activeImage.caption && (
+                                        <p className="text-xs sm:text-sm text-slate-300">
+                                            {activeImage.caption}
+                                        </p>
+                                    )}
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    );
+                })()}
+            </AnimatePresence>
         </div>
     );
 };

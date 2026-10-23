@@ -28,20 +28,20 @@ const AnalyzerDetails = ({ isDarkMode }) => {
     }
 
     return (
-        <div className={`min-h-screen pt-28 pb-16 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 text-slate-200' : 'bg-slate-50 text-slate-900'}`}>
-            <div className="container mx-auto px-6 max-w-5xl">
+        <div className={`min-h-screen pt-24 sm:pt-28 pb-12 sm:pb-16 transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 text-slate-200' : 'bg-slate-50 text-slate-900'}`}>
+            <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
                 
                 {/* Breadcrumbs */}
-                <div className="flex items-center gap-2 text-sm font-semibold mb-8">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold mb-6 sm:mb-8">
                     <Link to="/" className={`hover:text-emerald-500 transition-colors ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Home</Link>
-                    <ChevronRight size={14} className="text-slate-400" />
+                    <ChevronRight size={14} className="text-slate-400 shrink-0" />
                     <Link to="/product/698da53e5bff466e7fbecc3b" className={`hover:text-emerald-500 transition-colors ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Products</Link>
-                    <ChevronRight size={14} className="text-slate-400" />
-                    <span className="text-emerald-500">{data.name}</span>
+                    <ChevronRight size={14} className="text-slate-400 shrink-0" />
+                    <span className="text-emerald-500 truncate max-w-[150px] sm:max-w-none">{data.name}</span>
                 </div>
 
                 {/* Back Button */}
-                <Link to="/product/698da53e5bff466e7fbecc3b?tab=product" className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-600 transition-colors mb-8">
+                <Link to="/product/698da53e5bff466e7fbecc3b?tab=product" className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-500 hover:text-emerald-600 transition-colors mb-6 sm:mb-8">
                     <ArrowLeft size={16} />
                     Back to CAAQMS
                 </Link>
@@ -51,18 +51,18 @@ const AnalyzerDetails = ({ isDarkMode }) => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className={`rounded-3xl p-8 md:p-12 mb-12 shadow-xl border relative overflow-hidden ${isDarkMode ? 'bg-slate-950/50 border-slate-800' : 'bg-white border-slate-100'}`}
+                    className={`rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 mb-8 sm:mb-12 shadow-lg sm:shadow-xl border relative overflow-hidden ${isDarkMode ? 'bg-slate-950/50 border-slate-800' : 'bg-white border-slate-100'}`}
                 >
                     <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none -z-10" />
-                    <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                    <div className="relative z-10 flex flex-col md:flex-row gap-6 sm:gap-8 items-center">
                         <div className="flex-1 w-full">
-                            <span className="text-emerald-500 font-bold uppercase tracking-widest text-xs mb-3 block">
+                            <span className="text-emerald-500 font-bold uppercase tracking-wider text-xs mb-2 sm:mb-3 block">
                                 {data.category}
                             </span>
-                            <h1 className={`text-3xl md:text-5xl font-black mb-6 leading-tight tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                            <h1 className={`text-2xl sm:text-3xl md:text-5xl font-black mb-4 sm:mb-6 leading-tight tracking-tight break-words ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                                 {data.name}
                             </h1>
-                            <p className={`text-base md:text-lg leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                            <p className={`text-sm sm:text-base md:text-lg leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
                                 {data.desc}
                             </p>
                         </div>

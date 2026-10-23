@@ -203,17 +203,19 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
 
     return (
         <header
-            className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled
+            className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled
                 ? isDarkMode
-                    ? 'bg-slate-900 border-b border-slate-800 py-3 shadow-xl'
-                    : 'bg-white border-b border-slate-100 py-3 shadow-md'
-                : 'bg-transparent py-6'
+                    ? 'bg-slate-900/95 backdrop-blur-md border-b border-slate-800 py-3 shadow-xl'
+                    : 'bg-white/95 backdrop-blur-md border-b border-slate-100 py-3 shadow-md'
+                : isDarkMode
+                    ? 'bg-slate-900/60 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none py-3.5 lg:py-6'
+                    : 'bg-white/70 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none py-3.5 lg:py-6'
                 }`}
         >
-            <div className="container mx-auto px-6 flex justify-between items-center">
+            <div className="container mx-auto px-4 sm:px-6 flex justify-between items-center">
                 {/* Logo */}
-                <CustomLink href="/" className="flex items-center gap-3 group no-underline">
-                    <div className="w-12 h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <CustomLink href="/" className="flex items-center gap-2.5 sm:gap-3 group no-underline">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shrink-0">
                         <img
                             src={logo}
                             className="w-full h-full object-contain"
@@ -221,7 +223,7 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
                         />
                     </div>
                     <div className="flex flex-col justify-center">
-                        <span className={`text-xl md:text-2xl font-serif tracking-wide leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                        <span className={`text-lg sm:text-xl md:text-2xl font-serif tracking-wide leading-none ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                             SN ENVIRO
                         </span>
                     </div>
@@ -346,8 +348,9 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="lg:hidden p-2 text-slate-500"
+                    className="lg:hidden p-2 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                     onClick={() => setMobileMenuOpen(true)}
+                    aria-label="Open Navigation Menu"
                 >
                     <Menu size={24} />
                 </button>
@@ -356,10 +359,10 @@ const Header = ({ isDarkMode, toggleTheme, onOpenPartnerPortal }) => {
             {/* Mobile Menu Overlay */}
             <div className={`fixed inset-0 z-[200] lg:hidden transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={() => setMobileMenuOpen(false)}></div>
-                <div className={`absolute right-0 top-0 h-full w-4/5 max-w-sm p-8 shadow-2xl transition-transform duration-500 overflow-y-auto ${isDarkMode ? 'bg-slate-900' : 'bg-white'} ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                    <div className="flex justify-between items-center mb-12">
+                <div className={`absolute right-0 top-0 h-full w-[85%] max-w-sm p-6 sm:p-8 shadow-2xl transition-transform duration-500 overflow-y-auto ${isDarkMode ? 'bg-slate-900 text-slate-100' : 'bg-white text-slate-900'} ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                    <div className="flex justify-between items-center mb-8 sm:mb-12">
                         <span className={`text-xl font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Navigation</span>
-                        <button onClick={() => setMobileMenuOpen(false)} className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full">
+                        <button onClick={() => setMobileMenuOpen(false)} className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
                             <X size={20} />
                         </button>
                     </div>
