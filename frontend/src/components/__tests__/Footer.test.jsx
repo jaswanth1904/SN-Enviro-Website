@@ -38,4 +38,16 @@ describe('Footer Component', () => {
     );
     expect(container.querySelector('footer')).toHaveClass('bg-slate-950');
   });
+
+  it('renders SN ENVIRO brand heading and the three group companies', () => {
+    render(
+      <MemoryRouter>
+        <Footer isDarkMode={false} />
+      </MemoryRouter>
+    );
+    expect(screen.getByRole('heading', { name: 'SN ENVIRO' })).toBeInTheDocument();
+    expect(screen.getByText('SN Enviro Solutions')).toBeInTheDocument();
+    expect(screen.getByText('SN Enviro Services')).toBeInTheDocument();
+    expect(screen.getByText('SN Enviro India Pvt. Ltd.')).toBeInTheDocument();
+  });
 });
