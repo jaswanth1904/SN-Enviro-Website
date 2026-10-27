@@ -30,10 +30,11 @@ const locations = [
     {
         id: 1,
         name: "Corporate Head Office",
-        city: "Hyderabad",
-        coords: [17.42735, 78.5080124],
-        address: "H.no.6-1-279, Plot no.10, Mantri Mansion, Walker Town, Padmarao Nagar, Hyderabad, 500020",
-        phone: "+91 73309 33306"
+        city: "Secunderabad",
+        coords: [17.4401202, 78.5043297],
+        address: "Eden Amsri Square, 7th floor, Back side Vivah Bojanam Beside Apollo Hospital, St. John’s Road, Secunderabad, Telangana-500025.",
+        phone: "+91 73309 33306",
+        mapUrl: "https://www.google.com/maps/place/17%C2%B026'24.4%22N+78%C2%B030'15.6%22E/@17.4401202,78.5017548,17z/data=!3m1!4b1!4m4!3m3!8m2!3d17.4401202!4d78.5043297"
     }
 ];
 
@@ -109,10 +110,10 @@ const MapSection = ({ isDarkMode }) => {
                                                 <span>{loc.phone}</span>
                                             </div>
                                             <a
-                                                href={`https://www.google.com/maps/dir/?api=1&destination=${loc.coords[0]},${loc.coords[1]}`}
+                                                href={loc.mapUrl || `https://www.google.com/maps/dir/?api=1&destination=${loc.coords[0]},${loc.coords[1]}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center justify-center gap-2 w-full py-2 bg-white text-emerald-600 rounded-xl font-bold text-xs"
+                                                className="flex items-center justify-center gap-2 w-full py-2 bg-white text-emerald-600 rounded-xl font-bold text-xs hover:bg-slate-100 transition-colors"
                                             >
                                                 <Navigation size={14} />
                                                 Get Directions

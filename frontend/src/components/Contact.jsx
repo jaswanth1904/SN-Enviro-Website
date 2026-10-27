@@ -123,7 +123,7 @@ const Contact = ({ isDarkMode }) => {
                                     <div>
                                         <h4 className={`text-sm font-bold mb-0.5 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Address</h4>
                                         <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                                            {settings.contact_address || '6-1-279, Plot no.10, Mantri Mansion, Walker Town, Padmarao Nagar, Hyderabad, Telangana 500020'}
+                                            {settings.contact_address || 'Eden Amsri Square, 7th floor, Back side Vivah Bojanam Beside Apollo Hospital, St. John’s Road, Secunderabad, Telangana - 500025.'}
                                         </p>
                                     </div>
                                 </div>

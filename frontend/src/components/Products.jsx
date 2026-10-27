@@ -21,7 +21,7 @@ const Products = ({ isDarkMode }) => {
             category: "Emission Monitoring",
             desc: "Regulatory compliance solutions for industrial stack emissions.",
             details: "Measures SO2, NOx, CO, CO2, and O2 using UV-DOAS or NDIR technologies.",
-            imageUrl: "/assets/scs_900uv.png"
+            imageUrl: "/assets/cems_installation.jpg"
         },
         {
             _id: "698da53e5bff466e7fbecc40",
@@ -29,7 +29,7 @@ const Products = ({ isDarkMode }) => {
             category: "Water Quality",
             desc: "Real-time water quality analysis for industrial discharge compliance.",
             details: "Continuous monitoring of pH, COD, BOD, TSS, and Flow parameters.",
-            imageUrl: "/assets/model_1080.png"
+            imageUrl: "/assets/eqms_installation.jpg"
         },
         {
             _id: "698da53e5bff466e7fbecc41",

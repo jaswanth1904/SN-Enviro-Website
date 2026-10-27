@@ -9,7 +9,7 @@ const About = ({ isDarkMode }) => {
         setSettings({});
     }, []);
 
-    const aboutText = settings?.about_text || "Founded in January 2017 by a team of seasoned technocrats with over **100 years of combined experience**, SN Enviro Solutions has become a trusted name in online environmental monitoring solutions.";
+    const aboutText = settings?.about_text || "Founded in January 2017 by a team of seasoned technocrats with over **100 years of combined experience**, SN Enviro operates as an integrated group of companies dedicated to advancing environmental intelligence, instrumentation, and statutory compliance.";
     const aboutImage = settings?.about_image 
         ? (settings.about_image.startsWith('http') ? settings.about_image : `${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}/${settings.about_image}`)
         : "/assets/team-photo-optimized.jpg";
@@ -61,10 +61,47 @@ const About = ({ isDarkMode }) => {
                             className="mb-8"
                         >
                             <span className="text-emerald-500 font-bold uppercase tracking-[0.3em] text-xs mb-4 block">About SN Enviro</span>
-                            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold mb-8 leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                                 Engineering a <span className="text-emerald-500">Sustainable</span> Future
                             </h2>
-                            <p className={`text-lg mb-6 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`} dangerouslySetInnerHTML={{ __html: aboutText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }} />
+                            <p className={`text-base sm:text-lg mb-6 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`} dangerouslySetInnerHTML={{ __html: aboutText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>') }} />
+
+                            {/* Group Companies Overview */}
+                            <div className="mb-8">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-500">The SN Enviro Group</span>
+                                    <div className="h-px flex-1 bg-emerald-500/20"></div>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div className={`p-4 rounded-2xl border transition-all ${isDarkMode ? 'bg-slate-800/60 border-slate-700 hover:border-emerald-500/50' : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 shadow-sm'}`}>
+                                        <h4 className="font-bold text-sm text-emerald-500 mb-1.5 flex items-center gap-1.5">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                                            SN Enviro Solutions
+                                        </h4>
+                                        <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                                            Turnkey engineering, supply, and integration of CEMS, CAAQMS, EQMS & WMS continuous monitoring stations.
+                                        </p>
+                                    </div>
+                                    <div className={`p-4 rounded-2xl border transition-all ${isDarkMode ? 'bg-slate-800/60 border-slate-700 hover:border-emerald-500/50' : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 shadow-sm'}`}>
+                                        <h4 className="font-bold text-sm text-emerald-500 mb-1.5 flex items-center gap-1.5">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                                            SN Enviro Services
+                                        </h4>
+                                        <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                                            Comprehensive 24/7 on-site operations & maintenance (O&M), nationwide AMC contracts, and sensor calibration.
+                                        </p>
+                                    </div>
+                                    <div className={`p-4 rounded-2xl border transition-all ${isDarkMode ? 'bg-slate-800/60 border-slate-700 hover:border-emerald-500/50' : 'bg-slate-50 border-slate-200 hover:border-emerald-500/50 shadow-sm'}`}>
+                                        <h4 className="font-bold text-sm text-emerald-500 mb-1.5 flex items-center gap-1.5">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                                            SN Enviro India Pvt. Ltd.
+                                        </h4>
+                                        <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                                            Proprietary IIoT telemetry hardware, remote calibration modules, cloud platform analytics, and manufacturing.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div className="space-y-6 mb-8">
                                 <div>

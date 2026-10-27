@@ -277,37 +277,13 @@ const LifeAtSnEnviro = ({ isDarkMode }) => {
                     </div>
                 </div>
 
-                {/* Bottom Controls / Status Bar with Direct Left/Right Click Buttons */}
+                {/* Bottom Controls / Status Bar */}
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4 px-2 sm:px-6">
-                    {/* Left & Right Custom Click Buttons */}
+                    {/* Auto-scroll Play / Pause Toggle */}
                     <div className="flex items-center gap-2">
                         <button
-                            onClick={() => handleScroll('left')}
-                            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all border shadow-sm ${
-                                isDarkMode 
-                                    ? 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-emerald-500 hover:text-white hover:border-emerald-500' 
-                                    : 'bg-white border-slate-200 text-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500'
-                            }`}
-                            title="Scroll left to view previous images"
-                        >
-                            <ChevronLeft size={16} /> Previous
-                        </button>
-                        <button
-                            onClick={() => handleScroll('right')}
-                            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all border shadow-sm ${
-                                isDarkMode 
-                                    ? 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-emerald-500 hover:text-white hover:border-emerald-500' 
-                                    : 'bg-white border-slate-200 text-slate-700 hover:bg-emerald-500 hover:text-white hover:border-emerald-500'
-                            }`}
-                            title="Scroll right to view next images"
-                        >
-                            Next <ChevronRight size={16} />
-                        </button>
-
-                        {/* Auto-scroll Play / Pause Toggle */}
-                        <button
                             onClick={() => setIsAutoScrolling(!isAutoScrolling)}
-                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors border ml-2 ${
+                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors border ${
                                 isDarkMode 
                                     ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white' 
                                     : 'bg-white border-slate-200 text-slate-700 hover:text-slate-900 shadow-sm'

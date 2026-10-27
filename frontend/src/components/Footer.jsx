@@ -112,7 +112,7 @@ const Footer = ({ isDarkMode }) => {
                         <div className="space-y-4">
                             <div className="flex items-start gap-4 text-slate-100 drop-shadow-md font-medium">
                                 <MapPin size={20} className="text-emerald-400 shrink-0 mt-1" />
-                                <p className="text-sm">6-1-279, Plot no.10, Mantri Mansion, Hyderabad - 500020</p>
+                                <p className="text-sm">Eden Amsri Square, 7th floor, Back side Vivah Bojanam Beside Apollo Hospital, St. John’s Road, Secunderabad, Telangana - 500025.</p>
                             </div>
                             <div className="flex items-center gap-4 text-slate-100 drop-shadow-md">
                                 <Phone size={20} className="text-emerald-400 shrink-0" />

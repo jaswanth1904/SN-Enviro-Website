@@ -43,8 +43,8 @@ router.post('/', async (req, res) => {
                         <p>Best Regards,<br><strong>SN Enviro Solutions Team</strong></p>
                     </div>
                     <div style="background-color: #f1f1f1; padding: 20px; text-align: center; font-size: 12px; color: #777;">
-                        <p>© 2024 SN Enviro Solutions. All rights reserved.</p>
-                        <p>6-1-279, Plot no.10, Padmarao Nagar, Hyderabad, Telangana 500020</p>
+                        <p>© 2026 SN Enviro Solutions. All rights reserved.</p>
+                        <p>Eden Amsri Square, 7th floor, Back side Vivah Bojanam Beside Apollo Hospital, St. John’s Road, Secunderabad, Telangana-500025.</p>
                     </div>
                 </div>
             `

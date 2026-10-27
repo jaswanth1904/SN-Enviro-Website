@@ -326,7 +326,27 @@ const ProductDetails = ({ isDarkMode }) => {
                 { label: "Cabinet Climate Control", value: "Integrated AC Unit (1500W Cooling)" }
             ],
             compliance: "Fully compliant with EN 14181 (QAL1, QAL2, QAL3) and US EPA 40 CFR 60/75.",
-            imageUrl: "/assets/CEMS.jpg",
+            imageUrl: "/assets/cems_installation.jpg",
+            galleryImages: [
+                {
+                    url: "/assets/cems_installation.jpg",
+                    label: "Stack Installation",
+                    title: "Continuous Emission Monitoring System (CEMS) Stack Installation",
+                    caption: "Turnkey stack-mounted CEMS shelter with high-temperature sampling probe, multi-component gas analyzer rack (SO2, NOx, Dust), and automated calibration lines."
+                },
+                {
+                    url: "/assets/CEMS.jpg",
+                    label: "Analyzer Cabinet",
+                    title: "Turnkey Industrial CEMS Enclosure",
+                    caption: "Climate-controlled IP55 analyzer cabinet featuring UV-DOAS / NDIR analyzers, sample conditioning unit, and PLC data logger."
+                },
+                {
+                    url: "/assets/scs_900uv.png",
+                    label: "SCS-900UV Rack",
+                    title: "SCS-900UV Ultra-High Precision Analyzer Unit",
+                    caption: "UV differential optical absorption spectroscopy analyzer unit for trace gas precision and long-term zero drift stability."
+                }
+            ],
             features: ["Continuous stack gas emission monitoring", "Compliance with environmental regulations", "Integrated data acquisition system", "Automated calibration routines"],
             pros: ["Direct measurement of gases without heavy conditioning", "High reliability in harsh stack environments", "Low operational costs due to robust design"],
             cons: ["Requires regular filter cleaning in high-dust applications"]
@@ -373,7 +393,27 @@ const ProductDetails = ({ isDarkMode }) => {
                 { label: "Power Supply", value: "220V AC / 24V DC" }
             ],
             compliance: "Meets CPCB & SPCB guidelines for Real-time Online Effluent Monitoring.",
-            imageUrl: "/assets/EQMS.jpg",
+            imageUrl: "/assets/eqms_installation.jpg",
+            galleryImages: [
+                {
+                    url: "/assets/eqms_installation.jpg",
+                    label: "Plant Monitoring Point",
+                    title: "Outdoor Real-Time Treated Effluent Quality Monitoring Station",
+                    caption: "Field installation at treated effluent monitoring point featuring stainless steel enclosure, touch HMI displaying pH (7.31), TSS, TOC, BOD, and COD, flow sensors, and wireless telemetry."
+                },
+                {
+                    url: "/assets/EQMS.jpg",
+                    label: "Monitoring System",
+                    title: "Multi-Parameter Industrial Water Quality Analyzer",
+                    caption: "Continuous effluent monitoring system with automatic self-cleaning wiper and digital RS-485 Modbus telemetry."
+                },
+                {
+                    url: "/assets/model_1080.png",
+                    label: "Model 1080 Controller",
+                    title: "SDL Model 1080 Multi-Parameter Controller",
+                    caption: "Rack-mounted multi-channel controller with backlit digital display and integrated flow totalizer."
+                }
+            ],
             features: ["Reagent-free optical measurement statistics", "Automatic sensor cleaning mechanism", "Real-time data transmission to central server", "Rugged IP68 submersible sensors"],
             pros: ["Low maintenance (No chemical reagents)", "Instantaneous response time", "Long sensor life (> 3 years)"],
             cons: ["Periodic calibration required against lab samples"]

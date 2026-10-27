@@ -21,7 +21,7 @@ const initialProducts = [
         category: "Emission Monitoring",
         desc: "Continuous Emission Monitoring Systems for stack and flue gas monitoring.",
         detail: "Provides pinpoint detailing for industrial stack emissions. Accurately measures SO2, NOx, CO, CO2, and O2 levels using high-precision UV-DOAS or NDIR technologies. Ensures 100% regulatory compliance with advanced clean UI analytics.",
-        imageUrl: "/assets/CEMS.jpg",
+        imageUrl: "/assets/cems_installation.jpg",
         icon: "BarChart"
     },
     {
@@ -30,7 +30,7 @@ const initialProducts = [
         category: "Water Quality",
         desc: "Real-time water quality analysis for industrial discharge compliance.",
         detail: "Continuous monitoring of pH, COD, BOD, TSS, and Flow parameters.",
-        imageUrl: "/assets/model_1080.png",
+        imageUrl: "/assets/eqms_installation.jpg",
         icon: "Activity"
     },
     {
