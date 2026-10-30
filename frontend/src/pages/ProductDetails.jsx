@@ -257,7 +257,8 @@ const ProductDetails = ({ isDarkMode }) => {
                 { label: "CO LDL", value: "< 0.04 ppm" },
                 { label: "PM Measurement", value: "0-1000 µg/m³ (Beta Attenuation)" },
                 { label: "Met Sensors", value: "Wind Speed, Direction, Temp, RH, Solar Radiation, Rainfall" },
-                { label: "Calibration", value: "Built-in Dynamic Gas Dilution System" }
+                { label: "Calibration", value: "Built-in Dynamic Gas Dilution System" },
+                { label: "Communication", value: "Rs 232, Ethernet and Rs485" }
             ],
             compliance: "US EPA Designated Reference Methods, EU Directive 2008/50/EC.",
             imageUrl: "/assets/caaqms_diagram.jpg",

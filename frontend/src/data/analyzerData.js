@@ -21,7 +21,7 @@ export const analyzerData = {
             { label: "Span check facility", value: "Built in permeation bench (as an option)" },
             { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
             { label: "Analog Output", value: "4-20ma" },
-            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
+            { label: "Communication", value: "Rs 232, Ethernet and Rs485" }
         ]
     },
     nox: {
@@ -43,7 +43,7 @@ export const analyzerData = {
             { label: "Span check facility", value: "Built in permeation bench (as an option)" },
             { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
             { label: "Analog Output", value: "4-20ma" },
-            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
+            { label: "Communication", value: "Rs 232, Ethernet and Rs485" }
         ]
     },
     nh3: {
@@ -67,7 +67,7 @@ export const analyzerData = {
             { label: "Span check facility", value: "Built in permeation bench (as an option)" },
             { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
             { label: "Analog Output", value: "4-20ma" },
-            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
+            { label: "Communication", value: "Rs 232, Ethernet and Rs485" }
         ]
     },
     co: {
@@ -89,7 +89,7 @@ export const analyzerData = {
             { label: "Span check facility", value: "Built in permeation bench (as an option)" },
             { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
             { label: "Analog Output", value: "4-20ma" },
-            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
+            { label: "Communication", value: "Rs 232, Ethernet and Rs485" }
         ]
     },
     o3: {
@@ -111,7 +111,7 @@ export const analyzerData = {
             { label: "Span check facility", value: "Built in permeation bench (as an option)" },
             { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
             { label: "Analog Output", value: "4-20ma" },
-            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
+            { label: "Communication", value: "Rs 232, Ethernet and Rs485" }
         ]
     },
     pm: {
@@ -133,7 +133,7 @@ export const analyzerData = {
             { label: "Calibration", value: "Through multigas and the multiport calibrator and the Zero Air generator" },
             { label: "Compliance", value: "US EPA Equivalent Method / EN 16450" },
             { label: "Analog Output", value: "4-20ma" },
-            { label: "Communication", value: "Rs322, Ethernet and Rs485" }
+            { label: "Communication", value: "Rs 232, Ethernet and Rs485" }
         ]
     },
 
