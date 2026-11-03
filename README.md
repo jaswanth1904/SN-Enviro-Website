@@ -93,6 +93,18 @@ The application includes a secure, integrated **Admin Portal** designed for inte
 
 ---
 
+## 🛠️ External Tools, Security & Enterprise Skills
+
+For full details on the security auditing harness, anti-AI-slop Hallmark design auditor, Strix AI pentesting, and Coolify 24/7 VPS hosting, refer to:
+👉 **[EXTERNAL_TOOLS_AND_SECURITY_GUIDE.md](file:///c:/Users/Jaswanth/Desktop/SN-Enviro-Website/EXTERNAL_TOOLS_AND_SECURITY_GUIDE.md)**
+
+* **Cloudflare Security Audit**: `.agents/skills/security-audit/`
+* **Hallmark Design Skill**: `.agents/skills/hallmark/`
+* **Strix AI Pentesting**: Run via Docker against `http://localhost:5000`
+* **Coolify PaaS**: Self-hosted Ubuntu VPS deployment
+
+---
+
 ## 🚀 Installation & Local Setup
 
 To get a local copy up and running, follow these steps.

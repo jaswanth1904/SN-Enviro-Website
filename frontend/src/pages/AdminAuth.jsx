@@ -17,13 +17,36 @@ const AdminAuth = ({ isDarkMode }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.trim() || !emailRegex.test(email.trim())) {
+            setError('Please provide a valid administrator email address');
+            return;
+        }
+
+        if (!password || password.length < 6) {
+            setError('Password must contain at least 6 characters');
+            return;
+        }
+
+        if (!isLogin) {
+            if (!name.trim() || name.trim().length < 2) {
+                setError('Full name is required (minimum 2 characters)');
+                return;
+            }
+            if (!adminSecret.trim()) {
+                setError('Admin authorization secret passcode is required to register');
+                return;
+            }
+        }
+
+        setLoading(true);
 
         const endpoint = isLogin ? '/api/admin/login' : '/api/admin/signup';
         const body = isLogin
-            ? { email, password }
-            : { name, email, password, adminSecret };
+            ? { email: email.trim(), password }
+            : { name: name.trim(), email: email.trim(), password, adminSecret: adminSecret.trim() };
 
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || 'http://localhost:5000') + ''}${endpoint}`, {

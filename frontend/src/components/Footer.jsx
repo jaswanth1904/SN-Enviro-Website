@@ -132,11 +132,11 @@ const Footer = ({ isDarkMode }) => {
                     className="pt-6 border-t border-slate-700/50 flex flex-col md:flex-row justify-between items-center gap-4"
                 >
                     <p className="text-xs text-slate-300 drop-shadow-md font-medium">
-                        © 2024 SN Enviro Solutions. All Rights Reserved.
+                        © {new Date().getFullYear()} SN Enviro Solutions. All Rights Reserved.
                     </p>
                     <div className="flex gap-8">
-                        <a href="#" className="text-xs text-slate-300 font-medium hover:text-emerald-400 drop-shadow-md transition-colors no-underline">Privacy Policy</a>
-                        <a href="#" className="text-xs text-slate-300 font-medium hover:text-emerald-400 drop-shadow-md transition-colors no-underline">Terms of Service</a>
+                        <Link to="/privacy" className="text-xs text-slate-300 font-medium hover:text-emerald-400 drop-shadow-md transition-colors no-underline">Privacy Policy</Link>
+                        <Link to="/terms" className="text-xs text-slate-300 font-medium hover:text-emerald-400 drop-shadow-md transition-colors no-underline">Terms of Service</Link>
                     </div>
                 </motion.div>
             </motion.div>

@@ -6,7 +6,8 @@
   "scripts": {
     "server": "node server/index.js",
     "dev": "nodemon server/index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "backup": "node scripts/backup-db.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

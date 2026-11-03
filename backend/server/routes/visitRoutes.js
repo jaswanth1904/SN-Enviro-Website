@@ -52,4 +52,30 @@ router.get('/stats', async (req, res) => {
     }
 });
 
+// @route   POST api/visits/client-error
+// @desc    Log uncaught frontend runtime errors
+router.post('/client-error', async (req, res) => {
+    const { message, stack, componentStack, url } = req.body;
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+
+    try {
+        const ClientError = (await import('../models/ClientError.js')).default;
+        const newError = new ClientError({
+            message: message || 'Unknown Runtime Error',
+            stack: stack || '',
+            componentStack: componentStack || '',
+            url: url || '',
+            userAgent,
+            ip
+        });
+
+        await newError.save();
+        res.status(201).json({ success: true, errorId: newError._id });
+    } catch (err) {
+        console.error('Failed to save client error report:', err.message);
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
 export default router;

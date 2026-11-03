@@ -17,6 +17,9 @@ const ProductDetails = lazy(() => import('./pages/ProductDetails'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const AnalyzerDetails = lazy(() => import('./pages/AnalyzerDetails'));
 const EmployeePortal = lazy(() => import('./pages/EmployeePortal'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Loading Fallback
 const LoadingFallback = () => (
@@ -94,9 +97,26 @@ function App() {
                   <EmployeePortal isDarkMode={isDarkMode} />
                 </PublicLayout>
               } />
+              <Route path="/privacy" element={
+                <PublicLayout isDarkMode={isDarkMode} toggleTheme={toggleTheme} onOpenPartnerPortal={() => setIsPortalOpen(true)}>
+                  <PrivacyPolicy isDarkMode={isDarkMode} />
+                </PublicLayout>
+              } />
+              <Route path="/terms" element={
+                <PublicLayout isDarkMode={isDarkMode} toggleTheme={toggleTheme} onOpenPartnerPortal={() => setIsPortalOpen(true)}>
+                  <TermsOfService isDarkMode={isDarkMode} />
+                </PublicLayout>
+              } />
 
               {/* Admin Routes - Handled entirely by AdminRoutes */}
               <Route path="/admin/*" element={<AdminRoutes isDarkMode={isDarkMode} />} />
+
+              {/* Catch-All 404 Route for Unmatched Paths */}
+              <Route path="*" element={
+                <PublicLayout isDarkMode={isDarkMode} toggleTheme={toggleTheme} onOpenPartnerPortal={() => setIsPortalOpen(true)}>
+                  <NotFound isDarkMode={isDarkMode} />
+                </PublicLayout>
+              } />
             </Routes>
           </Suspense>
 

@@ -16,11 +16,32 @@ const transporter = nodemailer.createTransport({
 
 // POST a contact message
 router.post('/', async (req, res) => {
-    const { name, email, subject, message } = req.body;
+    const { name, email, phone, subject, message } = req.body;
+
+    // Strict validation
+    if (!name || name.trim().length < 2) {
+        return res.status(400).json({ msg: 'Full name is required (minimum 2 characters)' });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email.trim())) {
+        return res.status(400).json({ msg: 'Please provide a valid email address' });
+    }
+    if (!subject || subject.trim().length < 3) {
+        return res.status(400).json({ msg: 'Subject is required (minimum 3 characters)' });
+    }
+    if (!message || message.trim().length < 10) {
+        return res.status(400).json({ msg: 'Message is required (minimum 10 characters)' });
+    }
 
     try {
         // 1. Save to MongoDB
-        const newContact = new Contact({ name, email, subject, message });
+        const newContact = new Contact({
+            name: name.trim(),
+            email: email.trim().toLowerCase(),
+            phone: phone ? phone.trim() : '',
+            subject: subject.trim(),
+            message: message.trim()
+        });
         await newContact.save();
 
         // 2. Send Auto-Reply Email to Visitor

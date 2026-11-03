@@ -22,8 +22,16 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
+# Database Backups
+backups/
+*.dump
+
 # Binaries
 cloudflared.exe
 
 # Documentation (as per user request)
 README.md
+
+# Agent Skills & Local Tooling
+.agents/
+skills-lock.json

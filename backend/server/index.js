@@ -46,13 +46,33 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// Rate Limiting
+// General API Rate Limiting
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
-    message: 'Too many requests from this IP, please try again in an hour!'
+    max: 120, // Limit each IP to 120 requests per windowMs
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { msg: 'Too many requests from this IP, please try again after 15 minutes.' }
 });
 app.use('/api', limiter);
+
+// Strict Rate Limiter for Authentication (Brute-force protection)
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 8, // Max 8 authentication attempts per 15 mins per IP
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { msg: 'Too many authentication attempts. Access locked for 15 minutes.' }
+});
+
+// Strict Rate Limiter for Contact Inquiries (Spam protection)
+const contactLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 10, // Max 10 inquiries per hour per IP
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { msg: 'Inquiry rate limit exceeded. Please wait an hour before submitting another message.' }
+});
 
 app.use(cors());
 app.use(express.json({ limit: '10kb' })); // Limit body size
@@ -95,11 +115,13 @@ mongoose.connect(MONGODB_URI, { family: 4 })
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/contact', contactRoutes);
+app.use('/api/contact', contactLimiter, contactRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/partners', partnerRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/settings', settingRoutes);
+app.use('/api/admin/login', authLimiter);
+app.use('/api/admin/signup', authLimiter);
 app.use('/api/admin', adminRoutes);
 app.use('/api/visits', visitRoutes);
 app.use('/api/notifications', notificationRoutes);

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Package } from 'lucide-react';
+import EmptyState from '../components/common/EmptyState';
+import { SkeletonTable } from '../components/common/Skeleton';
 
 const AdminProducts = ({ isDarkMode }) => {
     const [products, setProducts] = useState([]);
@@ -170,29 +172,32 @@ const AdminProducts = ({ isDarkMode }) => {
             )}
 
             {/* Product List */}
-            <div className={`rounded-2xl shadow-sm border overflow-hidden ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead className={`border-b ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-                            <tr>
-                                <th className="p-4 font-semibold text-sm">Image</th>
-                                <th className="p-4 font-semibold text-sm">Title</th>
-                                <th className="p-4 font-semibold text-sm hidden md:table-cell">Description</th>
-                                <th className="p-4 font-semibold text-sm">Category</th>
-                                <th className="p-4 font-semibold text-sm text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
-                            {loading ? (
+            {loading ? (
+                <SkeletonTable rows={5} cols={5} isDarkMode={isDarkMode} />
+            ) : products.length === 0 ? (
+                <EmptyState
+                    icon={Package}
+                    title="No Environmental Products Yet"
+                    description="You have not created any monitoring systems or analyzer listings yet. Add your first system to showcase on the platform."
+                    actionLabel="Add New Product"
+                    onAction={() => setShowForm(true)}
+                    isDarkMode={isDarkMode}
+                />
+            ) : (
+                <div className={`rounded-2xl shadow-sm border overflow-hidden ${isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-200'}`}>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead className={`border-b ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
                                 <tr>
-                                    <td colSpan="5" className="p-8 text-center text-slate-500">Loading products...</td>
+                                    <th className="p-4 font-semibold text-sm">Image</th>
+                                    <th className="p-4 font-semibold text-sm">Title</th>
+                                    <th className="p-4 font-semibold text-sm hidden md:table-cell">Description</th>
+                                    <th className="p-4 font-semibold text-sm">Category</th>
+                                    <th className="p-4 font-semibold text-sm text-right">Actions</th>
                                 </tr>
-                            ) : products.length === 0 ? (
-                                <tr>
-                                    <td colSpan="5" className="p-8 text-center text-slate-500">No products found. Click "Add New Product" to get started.</td>
-                                </tr>
-                            ) : (
-                                products.map(product => (
+                            </thead>
+                            <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+                                {products.map(product => (
                                     <tr key={product._id} className={`hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors`}>
                                         <td className="p-4">
                                             <div className="w-12 h-12 rounded-lg border border-slate-200 dark:border-slate-700 bg-white flex items-center justify-center overflow-hidden">
@@ -213,21 +218,21 @@ const AdminProducts = ({ isDarkMode }) => {
                                         </td>
                                         <td className="p-4 text-right">
                                             <div className="flex justify-end gap-2">
-                                                <button onClick={() => handleEdit(product)} className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">
+                                                <button onClick={() => handleEdit(product)} className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors cursor-pointer">
                                                     <Edit2 size={18} />
                                                 </button>
-                                                <button onClick={() => handleDelete(product._id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                                                <button onClick={() => handleDelete(product._id)} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors cursor-pointer">
                                                     <Trash2 size={18} />
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

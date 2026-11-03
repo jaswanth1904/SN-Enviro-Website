@@ -6,19 +6,70 @@ const Contact = ({ isDarkMode }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         subject: '',
         message: ''
     });
+    const [touched, setTouched] = useState({});
     const [status, setStatus] = useState('idle'); // idle, loading, success, error
+    const [serverErrorMessage, setServerErrorMessage] = useState('');
     const [settings, setSettings] = useState({});
 
     React.useEffect(() => {
         setSettings({});
     }, []);
 
+    // Validation rules
+    const validate = () => {
+        const errors = {};
+        if (!formData.name.trim()) {
+            errors.name = 'Full name is required';
+        } else if (formData.name.trim().length < 2) {
+            errors.name = 'Name must be at least 2 characters';
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!formData.email.trim()) {
+            errors.email = 'Email address is required';
+        } else if (!emailRegex.test(formData.email.trim())) {
+            errors.email = 'Please provide a valid corporate or personal email';
+        }
+
+        const phoneRegex = /^(\+?\d{1,4}[\s-]?)?\(?\d{3,5}\)?[\s-]?\d{3,5}[\s-]?\d{3,5}$/;
+        if (formData.phone && !phoneRegex.test(formData.phone.trim().replace(/\s+/g, ''))) {
+            errors.phone = 'Please provide a valid 10-12 digit phone number';
+        }
+
+        if (!formData.subject.trim()) {
+            errors.subject = 'Subject is required';
+        } else if (formData.subject.trim().length < 3) {
+            errors.subject = 'Subject must be at least 3 characters';
+        }
+
+        if (!formData.message.trim()) {
+            errors.message = 'Inquiry message is required';
+        } else if (formData.message.trim().length < 10) {
+            errors.message = 'Please provide at least 10 characters describing your inquiry';
+        }
+
+        return errors;
+    };
+
+    const errors = validate();
+    const isFormValid = Object.keys(errors).length === 0;
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setTouched({ name: true, email: true, phone: true, subject: true, message: true });
+
+        if (!isFormValid) {
+            setServerErrorMessage('Please correct the highlighted fields before submitting.');
+            setStatus('error');
+            return;
+        }
+
         setStatus('loading');
+        setServerErrorMessage('');
 
         try {
             const response = await fetch((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/contact', {
@@ -27,20 +78,29 @@ const Contact = ({ isDarkMode }) => {
                 body: JSON.stringify(formData)
             });
 
+            const data = await response.json().catch(() => ({}));
+
             if (response.ok) {
                 setStatus('success');
-                setFormData({ name: '', email: '', subject: '', message: '' });
+                setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+                setTouched({});
             } else {
+                setServerErrorMessage(data.msg || data.message || 'Submission failed. Please try again later.');
                 setStatus('error');
             }
         } catch (error) {
             console.error('Submission error:', error);
+            setServerErrorMessage('Network connection lost. Please check your internet or try again shortly.');
             setStatus('error');
         }
     };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleBlur = (e) => {
+        setTouched({ ...touched, [e.target.name]: true });
     };
 
     return (
@@ -175,70 +235,148 @@ const Contact = ({ isDarkMode }) => {
 
                             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-1">
-                                    <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Full Name</label>
+                                    <div className="flex justify-between items-center">
+                                        <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Full Name *</label>
+                                        {touched.name && errors.name && (
+                                            <span className="text-[10px] text-red-500 font-medium">{errors.name}</span>
+                                        )}
+                                    </div>
                                     <input
                                         type="text"
                                         name="name"
                                         value={formData.name}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        disabled={status === 'loading'}
                                         placeholder="John Doe"
-                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'}`}
-                                        required
+                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all ${
+                                            touched.name && errors.name
+                                                ? 'border-red-500/80 focus:ring-2 focus:ring-red-500/40 bg-red-500/5'
+                                                : touched.name && !errors.name
+                                                ? 'border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/40'
+                                                : isDarkMode ? 'bg-slate-900 border-slate-700 text-white focus:ring-2 focus:ring-emerald-500/50' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500/50'
+                                        }`}
                                     />
                                 </div>
+
                                 <div className="space-y-1">
-                                    <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Email Address</label>
+                                    <div className="flex justify-between items-center">
+                                        <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Email Address *</label>
+                                        {touched.email && errors.email && (
+                                            <span className="text-[10px] text-red-500 font-medium">{errors.email}</span>
+                                        )}
+                                    </div>
                                     <input
                                         type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        disabled={status === 'loading'}
                                         placeholder="john@example.com"
-                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'}`}
-                                        required
+                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all ${
+                                            touched.email && errors.email
+                                                ? 'border-red-500/80 focus:ring-2 focus:ring-red-500/40 bg-red-500/5'
+                                                : touched.email && !errors.email
+                                                ? 'border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/40'
+                                                : isDarkMode ? 'bg-slate-900 border-slate-700 text-white focus:ring-2 focus:ring-emerald-500/50' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500/50'
+                                        }`}
                                     />
                                 </div>
-                                <div className="md:col-span-2 space-y-1">
-                                    <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Subject</label>
+
+                                <div className="space-y-1">
+                                    <div className="flex justify-between items-center">
+                                        <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Phone Number</label>
+                                        {touched.phone && errors.phone && (
+                                            <span className="text-[10px] text-red-500 font-medium">{errors.phone}</span>
+                                        )}
+                                    </div>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        disabled={status === 'loading'}
+                                        placeholder="+91 98765 43210"
+                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all ${
+                                            touched.phone && errors.phone
+                                                ? 'border-red-500/80 focus:ring-2 focus:ring-red-500/40 bg-red-500/5'
+                                                : touched.phone && formData.phone && !errors.phone
+                                                ? 'border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/40'
+                                                : isDarkMode ? 'bg-slate-900 border-slate-700 text-white focus:ring-2 focus:ring-emerald-500/50' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500/50'
+                                        }`}
+                                    />
+                                </div>
+
+                                <div className="space-y-1">
+                                    <div className="flex justify-between items-center">
+                                        <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Subject *</label>
+                                        {touched.subject && errors.subject && (
+                                            <span className="text-[10px] text-red-500 font-medium">{errors.subject}</span>
+                                        )}
+                                    </div>
                                     <input
                                         type="text"
                                         name="subject"
                                         value={formData.subject}
                                         onChange={handleChange}
-                                        placeholder="Inquiry about CAAQMS"
-                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all focus:ring-2 focus:ring-emerald-500/50 ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'}`}
-                                        required
+                                        onBlur={handleBlur}
+                                        disabled={status === 'loading'}
+                                        placeholder="Inquiry about CAAQMS or CEMS"
+                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all ${
+                                            touched.subject && errors.subject
+                                                ? 'border-red-500/80 focus:ring-2 focus:ring-red-500/40 bg-red-500/5'
+                                                : touched.subject && !errors.subject
+                                                ? 'border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/40'
+                                                : isDarkMode ? 'bg-slate-900 border-slate-700 text-white focus:ring-2 focus:ring-emerald-500/50' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500/50'
+                                        }`}
                                     />
                                 </div>
+
                                 <div className="md:col-span-2 space-y-1">
-                                    <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Message</label>
+                                    <div className="flex justify-between items-center">
+                                        <label className={`text-[10px] font-bold uppercase tracking-wider ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Inquiry Message *</label>
+                                        {touched.message && errors.message && (
+                                            <span className="text-[10px] text-red-500 font-medium">{errors.message}</span>
+                                        )}
+                                    </div>
                                     <textarea
                                         name="message"
                                         value={formData.message}
                                         onChange={handleChange}
-                                        placeholder="Tell us about your requirements..."
+                                        onBlur={handleBlur}
+                                        disabled={status === 'loading'}
+                                        placeholder="Please describe your facility location, monitoring parameters required, and timeline..."
                                         rows="4"
-                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all focus:ring-2 focus:ring-emerald-500/50 resize-none ${isDarkMode ? 'bg-slate-900 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'}`}
-                                        required
+                                        className={`w-full px-4 py-2.5 text-sm rounded-xl border outline-none transition-all resize-none ${
+                                            touched.message && errors.message
+                                                ? 'border-red-500/80 focus:ring-2 focus:ring-red-500/40 bg-red-500/5'
+                                                : touched.message && !errors.message
+                                                ? 'border-emerald-500/60 focus:ring-2 focus:ring-emerald-500/40'
+                                                : isDarkMode ? 'bg-slate-900 border-slate-700 text-white focus:ring-2 focus:ring-emerald-500/50' : 'bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-emerald-500/50'
+                                        }`}
                                     ></textarea>
                                 </div>
+
                                 <div className="md:col-span-2 pt-2">
                                     <button
                                         type="submit"
                                         disabled={status === 'loading'}
-                                        className="w-full px-6 py-2.5 text-sm bg-emerald-500 text-white rounded-xl font-bold uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-2 active:scale-[0.98] disabled:opacity-70"
+                                        className="w-full px-6 py-2.5 text-sm bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold uppercase tracking-wider hover:from-emerald-600 hover:to-teal-700 transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-2 active:scale-[0.98] disabled:opacity-70 cursor-pointer"
                                     >
                                         {status === 'loading' ? (
                                             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                                         ) : (
                                             <Send size={16} />
                                         )}
-                                        {status === 'loading' ? 'Sending...' : 'Send Message'}
+                                        {status === 'loading' ? 'Transmitting Inquiry...' : 'Submit Inquiry'}
                                     </button>
                                 </div>
+
                                 {status === 'error' && (
-                                    <div className="md:col-span-2 p-3 text-sm bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl text-center font-bold">
-                                        Something went wrong. Please try again later.
+                                    <div className="md:col-span-2 p-3 text-sm bg-red-500/10 border border-red-500/20 text-red-500 rounded-xl text-center font-semibold">
+                                        {serverErrorMessage || 'Unable to submit your message. Please verify all inputs and try again.'}
                                     </div>
                                 )}
                             </form>
